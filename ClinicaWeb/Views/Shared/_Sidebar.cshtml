@@ -1,0 +1,58 @@
+﻿<!-- start sidebar menu -->
+<div class="sidebar-container">
+    <div class="sidemenu-container navbar-collapse collapse fixed-menu">
+        <div id="remove-scroll" class="left-sidemenu">
+            @if (Request.IsAuthenticated)
+            {
+                if (User.IsInRole("Paciente"))
+                {
+            <ul class="sidemenu  page-header-fixed slimscroll-style" data-keep-expanded="false"
+                data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                <li class="sidebar-toggler-wrapper hide">
+                    <div class="sidebar-toggler">
+                        <span></span>
+                    </div>
+                </li>
+                <li class="sidebar-user-panel">
+                    <div class="sidebar-user">
+                        <div class="sidebar-user-picture">
+                            <img src="@Url.Content("~/Admin/light/img/Logo.png")" style="height:130px;width:130px">
+                        </div>
+                        <div class="sidebar-user-details">
+                            <div class="user-name">Laboratorio Clinico</div>
+                            <div class="user-role">Santa Fe</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item start @ViewBag.P1">
+                    <a href="@Url.Action("OrdenesPacientes","Ordens")" class="nav-link nav-toggle">
+                        <i data-feather="airplay"></i>
+                        <span class="title">Mis Ordenes</span>
+                    </a>
+                </li>
+                <li class="nav-item @ViewBag.P2">
+                    <a href="@Url.Action("Index","Examen")" class="nav-link nav-toggle">
+                        <i data-feather="file-text"></i>
+                        <span class="title">Examenes</span>
+                    </a>
+                </li>
+                <li class="nav-item @ViewBag.P3">
+                    <a href="@Url.Action("ListaExamenes","Examen")" class="nav-link nav-toggle">
+                        <i data-feather="list"></i>
+                        <span class="title">Mi Lista de Examenes</span>
+                    </a>
+                </li>
+                <li class="nav-item  @ViewBag.P4">
+                    <a href="@Url.Action("Index","Manage")" class="nav-link nav-toggle">
+                        <i data-feather="user-check"></i>
+                        <span class="title">Perfil de Usuario</span>
+                    </a>
+                </li>
+            </ul>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+<!-- end sidebar menu -->

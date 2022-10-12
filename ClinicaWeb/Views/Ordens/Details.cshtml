@@ -1,0 +1,203 @@
+﻿@model ClinicaWeb.Models.Orden
+
+@{
+    ViewBag.P1 = "active";
+    ViewBag.Title = "Details";
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista"))
+    {
+        ViewBag.A01 = "menu-open";
+        ViewBag.A1 = "active";
+
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        if (Model.Estado == "Finalizado")
+        {
+            ViewBag.R2 = "active";
+            ViewBag.A1AA = "active";
+        }
+        else
+        {
+            ViewBag.R1 = "active";
+            ViewBag.A1A = "active";
+
+        }
+
+    }
+    else if (User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        if (Model.Estado == "Finalizado")
+        {
+            ViewBag.L2 = "active";
+        }
+        else
+        {
+            ViewBag.L1 = "active";
+        }
+    }
+}
+
+@{
+    int i = 0;
+}
+
+<div class="card ">
+    <h3 class="text-center"><b>Orden</b></h3>
+
+    <table class="card-body table table-hover">
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">
+                <label for="Name">Examenes</label>
+            </th>
+            <th class="text-center">
+                <label for="Cant">Cantidad</label>
+            </th>
+            <th class="text-center">
+                <label for="Cant">Empleado</label>
+            </th>
+            <th class="text-center">Opciones</th>
+        </tr>
+
+        @foreach (var item in Model.DetalleOrden)
+        {
+            if (item.Estado == "Pendiente" && (User.IsInRole("Laboratorista") || User.IsInRole("Admin")))
+            {
+                i++;
+                <tr>
+                    <td class="text-center">
+                        <strong>@i</strong>
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
+                    </td>
+                    <td>
+                        <a id='btnadd' href="@Url.Action("Details", "DetalleOrdens", new { id = item.Id })" class='btn btn-block btn-primary'>Añadir Resultado</a>
+                    </td>
+                </tr>
+            }
+            else if (item.Estado == "Pendiente" && (User.IsInRole("Recepcionista") || User.IsInRole("Paciente") || User.IsInRole("Admin")))
+            {
+
+                i++;
+                <tr>
+                    <td class="text-center">
+                        <strong>@i</strong>
+                    </td>
+                    <td class="text-center">
+
+                        @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
+                    </td>
+                    <td>
+                        <button id='btnadd' disabled class='btn btn-block btn-primary'>En proceso</button>
+                    </td>
+                </tr>
+            }
+            else if (item.Estado == "Solicitud" && (User.IsInRole("Recepcionista") || User.IsInRole("Paciente") || User.IsInRole("Admin")))
+            {
+
+                i++;
+                <tr>
+                    <td class="text-center">
+                        <strong>@i</strong>
+                    </td>
+                    <td class="text-center">
+
+                        @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
+                    </td>
+                    <td>
+                        <button id='btnadd' disabled class='btn btn-block btn-primary'>En proceso de aceptación</button>
+                    </td>
+                </tr>
+            }
+            @*else if (item.Estado == "En proceso")
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
+                        </td>
+                        <td>
+                            <button id='btnadd' disabled class='btn btn-block btn-primary'>En proceso</button>
+                        </td>
+                    </tr>
+                }*@
+        else if (item.Estado == "Terminado")
+        {
+            i++;
+                <tr>
+                    <td class="text-center">
+                        <strong>@i</strong>
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-block btn-success" onclick="download(@item.Id, @item.Examen.Categoria.Id)" type="submit">Imprimir Resultado</button>
+                    </td>
+                </tr>
+            }
+
+
+        }
+
+    </table>
+</div>
+@if (User.IsInRole("Laboratorista") || User.IsInRole("Admin"))
+{
+    ViewBag.M8 = "active";
+    bool band = Model.DetalleOrden.All(x => x.Estado == "Terminado");
+
+    if (band && (Model.Estado != "Finalizado"))
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <a href="@Url.Action("OrdenFinal", "Ordens", new { id = Model.Id })" class="nav-link btn btn-block btn-primary">
+                    Finalizar Orden
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <button class="nav-link btn btn-block btn-primary" disabled> Finalizar Orden </button>
+            </div>
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    function download(id, categoria) {
+        window.open("/Resultadoes/DescargarResult/" + id + "?categoria=" + categoria);
+    }
+</script>

@@ -1,0 +1,113 @@
+﻿@model ClinicaWeb.Models.Factura
+
+@{
+    ViewBag.Title = "Detalle de Facturas";
+    ViewBag.M5 = "active";
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.R6 = "active";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="row g-5">
+    <div class="col-md-5 col-lg-4 order-md-last">
+
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Tus Examenes</span>
+            <span class="badge bg-primary rounded-pill">@String.Format(Model.DetalleFactura.Sum(x => x.Cantidad).ToString())</span>
+        </h4>
+        <ul class="list-group mb-3">
+            @foreach (var item in Model.DetalleFactura)
+            {
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">@Html.DisplayFor(ModelItem => item.Descripcion)</h6>
+                        <small class="text-muted">Cantidad = @Html.DisplayFor(ModelItem => item.Cantidad)</small>
+                    </div>
+                    <span class="text-muted">@(item.Cantidad * item.PrecioUnitario)</span>
+                </li>
+            }
+
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total (C$)</span>
+                <strong>@String.Format("{0:C}", double.Parse(Model.DetalleFactura.Sum(x => x.Cantidad * x.PrecioUnitario).ToString())) </strong>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Factura</h4>
+        <form class="needs-validation" novalidate>
+            @foreach (var item in Model.DetalleFactura)
+            {
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="Cod" class="form-label">Codigo de Factura</label>
+                        <input type="text" class="form-control" value="@Model.CodFactura" disabled />
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="Nombre" class="form-label">Nombre del paciente</label>
+                        <input type="text" class="form-control" placeholder="" value="@(item.Orden.Paciente.Nombre_pac)" required>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <label for="Fecha" class="form-label">Fecha</label>
+                        <input type="text" class="form-control" placeholder="" value="@String.Format("{0}", DateTime.Parse(Model.FechaFac).ToLongDateString())" required>
+
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <label for="Direccion" class="form-label">Domicilio</label>
+                        <input type="text" class="form-control" placeholder="" value="@item.Orden.Paciente.Direccion" required>
+
+                    </div>
+                </div>
+                break;
+            }
+
+
+
+
+            <hr class="my-4">
+
+            <button class="w-100 btn btn-primary btn-lg" onclick="download()" type="submit">Imprimir Factura</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function download() {
+        window.open("/Facturas/DescargarFact/" + @Model.Id);
+                    }
+</script>
+
+
+
+
+
+
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>Factura</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaFac)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaFac)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

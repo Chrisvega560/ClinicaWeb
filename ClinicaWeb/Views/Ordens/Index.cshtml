@@ -1,0 +1,156 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Orden>
+@using ClinicaWeb.Models
+@{
+
+    List<Examen> cat = ViewBag.ExamenCategorias;
+    ViewBag.Title = "Ordenes";
+
+    if (User.IsInRole("Paciente"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.L1 = "active";
+        ViewBag.R1 = "active";
+        ViewBag.A01 = "menu-open";
+        ViewBag.A1 = "active";
+        ViewBag.A1A = "active";
+    }
+}
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1>Ordenes</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <form action="@Url.Action("ListOrder", "Ordens")" method="get" class="navbar-form navbar-right" role="search">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" id="value" name="valor" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ol>
+
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 animated bounceInDown default-stripe">
+            <!-- Widget: user widget style 1 -->
+            <div class="card card-widget widget-user shadow">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username" style="margin-bottom:2px">@Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)</h3>
+                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.Paciente.Correo)</h5>
+                </div>
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="@Url.Content("~/adminlte/dist/img/SantaFe.png")" alt="User Avatar">
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">@Html.DisplayFor(modelItem => item.Cod_Orden)</h5>
+                                <span class="description-text">Codigo de Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header"> @Html.DisplayFor(modelItem => item.Fecha)</h5>
+                                <span class="description-text">Fecha de la Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="description-block">
+                                <a id='btnadd' href="@Url.Action("Details", "Ordens", new { id = item.Id })" class='btn-sm btn-block btn-primary'>Ver detalle</a>
+                                <span class="description-text">Ir a la Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+
+
+    }
+</div>
+
+
+
+@*<p>
+
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod_Orden)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lugar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medico.NombreMed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paciente.Nombre_pac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empleado.Nom_Empleado)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cod_Orden)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lugar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.NombreMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empleado.Nom_Empleado)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@

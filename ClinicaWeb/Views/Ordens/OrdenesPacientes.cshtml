@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Orden>
+@{
+    ViewBag.Title = "Ordenes por Pacientes";
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewBag.P1 = "active";
+    }
+}
+
+<div class="page-bar">
+    <div class="page-title-breadcrumb">
+        <div class=" pull-left">
+            <div class="page-title">Ordenes</div>
+        </div>
+        <ol class="breadcrumb page-breadcrumb pull-right">
+            <form class="search-form-opened navbar-form navbar-right" action="@Url.Action("ListOrder", "Ordens")" method="GET" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search..." name="valor">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default navbar-right">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </ol>
+    </div>
+</div>
+
+
+@if (ViewBag.cant == 0)
+{
+
+    <script>
+           Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Aun no tienes ordenes, has tu primera orden!',
+            });
+            setTimeout(function () {
+              window.location.href = "@Url.Action("Index","Examen")";
+                                    }, 2000);
+    </script>
+}
+else
+{
+
+
+    foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-12 col-sm-12 col-12 animated bounceInDown default-stripe">
+            <div class="white-box border-gray">
+                <div class="user-bg">
+                    <div class="overlay-box" style="background-color:black">
+                        <div class="user-content">
+                            <img alt="img" class="thumb-lg img-circle"
+                                 src="@Url.Content("~/adminlte/dist/img/SantaFe.png")">
+                            <h4 class="text-white">@Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)</h4>
+                            <h5 class="text-white">@Html.DisplayFor(modelItem => item.Paciente.Correo)</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-btm-box">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <p class="text-purple">Codigo de Orden</p>
+                            <h3>  @Html.DisplayFor(modelItem => item.Cod_Orden)</h3>
+                        </div>
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <p class="text-success">Fecha de la Orden</p>
+                            <h4> @Html.DisplayFor(modelItem => item.Fecha)</h4>
+                        </div>
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <p class="text-danger">Ir a la Orden</p>
+                            <br>
+                            <a id='btnadd' href="@Url.Action("Details", "Ordens", new { id = item.Id })" class='btn btn-block btn-primary' style="border-radius:50%">Ver detalle</a>
+                        </div>
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <p class="text-success">Estado</p>
+                            <h4> <span class="float-right badge bg-danger"> @Html.DisplayFor(modelItem => item.Estado)</span></h4>
+                        </div>
+                    </div>
+                    <div class="col-md-12  m-b-0 text-center">
+                        <div class="stat-item">
+                            <h6>Para mayor información, contactanos</h6> <b><i class="fa fa-phone"></i> </b> <a href="tel:+123456"> 123456</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}

@@ -1,0 +1,209 @@
+﻿@using ClinicaWeb.Models
+@model ClinicaWeb.Models.DetalleOrden
+
+@{
+    ViewBag.Title = "Details";
+    List<ExamenParametro> parametros = ViewBag.lista;
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        ViewBag.M1 = "active";
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="mt-4">
+    <h4 align="center">Tabla de Resultados</h4>
+    <br />
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <h5 align="center">Parametros</h5>
+                </th>
+                <th>
+                    <h5 align="center">Valores</h5>
+                </th>
+                <th>
+                    <h5 align="center">Observacion</h5>
+                </th>
+                <th>
+                    <h5 align="center">Maximo</h5>
+                </th>
+                <th>
+                    <h5 align="center">Minimo</h5>
+                </th>
+
+                <th>
+                    <h5 align="center">Densidad</h5>
+                </th>
+                <th>
+                    <h5 align="center">Valores Normales</h5>
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in parametros)
+        {
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <input value="@item.Parametro.Id" hidden name="nombre[]" />
+                        <h5> @item.Parametro.Nom_Parametro </h5>
+                    </td>
+                    <td align="center">
+                        <input type="text" name="param[]" />
+
+                    </td>
+                    <td align="center">
+                        <input type="text" name="descripcion[]" />
+
+                    </td>
+
+                    <td align="center">
+                        @item.Parametro.Reactivo.Maximo
+                    </td>
+
+                    <td align="center">
+                        @item.Parametro.Reactivo.Minimo
+                    </td>
+
+                    <td align="center">
+                        @item.Parametro.Reactivo.Densidad
+                    </td>
+
+                    <td align="center">
+                        @item.Parametro.Reactivo.ValoresNormales
+                    </td>
+
+                </tr>
+            </tbody>
+
+
+        }
+    </table>
+    <div class="row">
+        <div class="col-md-3 mt-5">
+            <button id='btnadd' onclick="save()" class='btn btn-block btn-success'>Guardar Resultados</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+                function save()
+                {
+                    var parametro = document.getElementsByName("param[]");
+                    var desc = document.getElementsByName("descripcion[]");
+                    var name = document.getElementsByName("nombre[]");
+
+                    var param = [];
+                    var descrip = [];
+                    var nom = [];
+
+
+
+                    for (var i = 0; i < parametro.length; i++) {
+
+                        param.push(parametro[i].value);
+                        descrip.push(desc[i].value);
+                        nom.push(name[i].value);
+                    }
+
+                            $.ajax({
+                                type: 'POST',
+                                url: "@Url.Action("save", "DetalleOrdens")",
+                                content: "application/json; charset=utf-8",
+                                dataType: "json",
+                                data: { data: param, obs: descrip, id: @Model.Id, idparametro: nom},
+                                success: function (result) {
+                                    if (result.success == true)
+                                        Swal.fire(
+                                            'Buen trabajo!',
+                                            'Resultados guardados exitosamente!',
+                                            'success'
+                                        )
+                                    else
+                                        Swal.fire(
+                                            'Buen trabajo!',
+                                            'Resultados guardados exitosamente!',
+                                            'success'
+                                        );
+                                    setTimeout(function () {
+                                        window.location.href = "@Url.Action("Details","Ordens", new { id = Model.OrdenId })";
+                                    }, 2000);
+
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Ocurrio un error, revisa nuevamente!',
+                                    });
+                                }
+                            });
+                }
+    </script>
+</div>
+
+    @*<div>
+            <h4>DetalleOrden</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cantidad)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaFinal)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FechaFinal)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Precio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Orden.Cod_Orden)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Orden.Cod_Orden)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Examen.Nombre_exa)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Examen.Nombre_exa)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@

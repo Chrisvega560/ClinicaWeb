@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Sexo>
+
+@{
+    ViewBag.Title = "Sexualidad";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A8 = "active";
+
+}
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+    <div class="col-md-2">
+        <a href="Javascript:window.print()" class="btn btn-primary"> <i class="fa fa-print"></i> Imprimir Listado</a>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
+    <tr>
+        <th>
+            Tipo de Sexo
+        </th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoSexo)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","sexoes",new { id = item.Id })" class="btn btn-info" title="Editar Sexo"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","sexoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Sexo"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<a href="@Url.Action("Create","sexoes")" class="btn btn-success"><i class="fa fa-plus"></i> Crear Nuevo</a>

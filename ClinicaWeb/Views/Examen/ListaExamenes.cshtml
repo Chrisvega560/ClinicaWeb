@@ -1,0 +1,293 @@
+﻿@model IEnumerable<ClinicaWeb.Models.DetalleOrden>
+@{
+    ViewBag.Title = "ListaExamenes";
+
+
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        ViewBag.R5 = "active";
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        int cont = ViewBag.cart;
+
+        int i = 0;
+        <div class="row card">
+            <div class="col-md-12">
+                <div class="mt-2">
+                    <h3><b>Mi Lista de Examenes</b></h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="text-align:center">
+                                <address>
+                                    <img src="@Url.Content("~/Admin/light/img/Logo.png")" alt="logo" class="logo-default" style="height:200px; width:200px" />
+                                </address>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="table-responsive m-t-40">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Examenes</th>
+                                            <th class="text-center">Precios</th>
+                                            <th class="text-center">Cantidad de examenes</th>
+                                            <th class="text-center">Subtotal</th>
+                                            <th class="text-center">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            i++;
+                                            <tr>
+                                                <td class="text-center">  <strong>@i</strong></td>
+                                                <td> @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)</td>
+                                                <td class="text-center">@String.Format("{0:C}", item.Examen.Precio)</td>
+                                                <td class="text-center"> @Html.DisplayFor(modelItem => item.Cantidad)</td>
+                                                <td class="text-center">  @String.Format("{0:C}", double.Parse(item.Cantidad) * item.Examen.Precio)</td>
+                                                <td class="text-center"> <button type="button" id="@item.Id.ToString()" class="btn btn-danger" onclick="del(@item.ExamenId.ToString(),'@item.Examen.Nombre_exa')">Eliminar</button></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right m-t-30 text-right mr-3">
+                                <h3><b>Monto Total : </b>  @String.Format("{0:C}", Model.Sum(x => double.Parse(x.Cantidad) * x.Examen.Precio))</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            @if (cont <= 0)
+                            {
+                                <div class="text-right mb-3 mr-3">
+                                    <button class="btn btn-success" disabled>Crear Orden</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-right mb-3 mr-3">
+                                    <a class="btn btn-success" href="@Url.Action("Create","Ordens" )">
+                                       Crear Orden
+                                    </a>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        ViewBag.P3 = "active";
+        int cont = ViewBag.cart;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        int i = 0;
+        <div class="row card">
+            <div class="col-md-12">
+                <div class="white-box">
+                    <h3><b>Mi Lista de Examenes</b></h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="text-align:center">
+                                <address>
+                                    <img src="@Url.Content("~/Admin/light/img/Logo.png")" alt="logo" class="logo-default" style="height:200px; width:200px" />
+                                </address>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="table-responsive m-t-40">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Examenes</th>
+                                            <th class="text-center">Precios</th>
+                                            <th class="text-center">Cantidad de examenes</th>
+                                            <th class="text-center">Subtotal</th>
+                                            <th class="text-center">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            i++;
+                                            <tr>
+                                                <td class="text-center">  <strong>@i</strong></td>
+                                                <td> @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)</td>
+                                                <td class="text-center">@String.Format("{0:C}", item.Examen.Precio)</td>
+                                                <td class="text-center"> @Html.DisplayFor(modelItem => item.Cantidad)</td>
+                                                <td class="text-center">  @String.Format("{0:C}", double.Parse(item.Cantidad) * item.Examen.Precio)</td>
+                                                <td class="text-center"> <button type="button" id="@item.Id.ToString()" class="btn btn-danger" onclick="del(@item.ExamenId.ToString(),'@item.Examen.Nombre_exa')">Eliminar</button></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right m-t-30 text-right">
+                                <h3><b>Monto Total : </b>  @String.Format("{0:C}", Model.Sum(x => double.Parse(x.Cantidad) * x.Examen.Precio))</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            @if (cont <= 0)
+                            {
+                                <div class="text-right mb-3 mr-3">
+                                    <button class="btn btn-success" disabled>Crear Orden</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-right mb-3 mr-3">
+                                    <a class="btn btn-success" href="@Url.Action("Create","Ordens" )">
+                                        Crear Orden
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                Posicion
+            </th>
+            <th>
+                Nombre del Examen
+            </th>
+            <th>
+                Precio del examen
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <td>
+                <strong>Subtotal</strong>
+            </td>
+            <th>
+                Opciones
+            </th>
+        </tr>
+        @{
+            int i = 0;
+        }
+
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td>
+                    <strong>@i</strong>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Examen.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @String.Format("{0:C}", double.Parse(item.Cantidad) * item.Examen.Precio)
+                </td>
+                <td>
+                    <button type="button" id="@item.Id.ToString()" class="btn btn-danger" onclick="del(@item.ExamenId.ToString(),'@item.Examen.Nombre_exa')">Eliminar</button>
+
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+    <div class="row pb-5">
+
+        <div class="col-md-6">
+            <h2>Monto Total @String.Format("{0:C}", Model.Sum(x => double.Parse(x.Cantidad) * x.Examen.Precio)) </h2>
+        </div>
+        <div class="col-md-6 ml-auto">
+            <a class="btn btn-success" href="@Url.Action("Create","Ordens" )">
+                Crear Orden
+            </a>
+        </div>
+    </div>*@
+
+<script type="text/javascript">
+
+                function del(idexamen, nombre) {
+                    Swal.fire({
+                        title: 'Detente!',
+                        text: "El examen " + nombre + " se eliminara de tu lista de examenes!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                            type: 'POST',
+                            url: "@Url.Action("eliminar", "Examen", new { id = 0 })" + "?idexamen=" + idexamen,
+                            content: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({ idexamen }),
+                            success: function (result) {
+                                if (result.success == true) {
+                                    Swal.fire(
+                                        'Eliminado!',
+                                        'Examen eliminado de tu lista exitosamente!',
+                                        'success'
+                                    );
+                                    location.reload();
+                                }
+                                else {
+                                    Swal.fire(
+                                        'Eliminado!',
+                                        'Examen eliminado de tu lista exitosamente!',
+                                        'success'
+                                    ).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload();
+                                        }
+                                    });
+                                }
+
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Error " + errorThrown + textStatus, 4);
+                            }
+                        });
+                        }
+
+                    });
+                }
+
+</script>
+

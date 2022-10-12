@@ -1,0 +1,358 @@
+﻿
+@{
+    ViewBag.Title = "_SidebarSis";
+}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo --
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="brand-link">
+            <img alt="image" src="@Url.Content("~/Adminlte/dist/img/Santafe.png")" style="height: 100px; width: 100px; border-radius: 10%; margin-left: 50px">
+        </a>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            @if (Request.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Home")" class="nav-link @ViewBag.A0">
+                                <i class="nav-icon fas fa-info"></i>
+                                <p>
+                                    Información
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item @ViewBag.A01">
+                            <a href="#" class="nav-link @ViewBag.A1">
+                                <i class="nav-icon fa fa-notes-medical"></i>
+                                <p>
+                                    Ordenes
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Ordens")" class="nav-link  @ViewBag.A1A">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ordenes pendientes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("OrdenesFinalizadas", "Ordens")" class="nav-link @ViewBag.A1AA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Ordenes Finalizadas
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Solicitudes", "Ordens")" class="nav-link @ViewBag.A1AAA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Solicitudes de  Ordenes
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "DetalleOrdens") class="nav-link  @ViewBag.A1AAAA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Detalle de Ordenes</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-closed">
+                            <a href="#" class="nav-link @ViewBag.A2">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Examenes
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "Examen") class="nav-link  @ViewBag.A2A">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Examen</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "Parametroes") class="nav-link  @ViewBag.A2AA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Parametro</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "Reactivoes") class="nav-link  @ViewBag.A2AAA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reactivos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "ExamenParametroes") class="nav-link  @ViewBag.A2AAAA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Examen Parametro</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-closed">
+                            <a href="#" class="nav-link @ViewBag.A3">
+                                <i class="nav-icon fa-solid fa-square-poll-vertical"></i>
+                                <p>
+                                    Resultados
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Resultadoes")" class="nav-link @ViewBag.A3A">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Resultado</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index", "DetalleResultadoes") class="nav-link @ViewBag.A3AA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Detalle de Resultado</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-closed">
+                            <a href="#" class="nav-link @ViewBag.A4">
+                                <i class="nav-icon fas fa-calculator"></i>
+                                <p>
+                                    Facturacion
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index","Facturas") class="nav-link @ViewBag.A4A">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Factura</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index","DetalleFacturas") class="nav-link @ViewBag.A4AA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Detalle de factura</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Categorias") class="nav-link @ViewBag.A5">
+                                <i class="nav-icon fa-solid fa-arrow-up-a-z"></i>
+                                <p>
+                                    Categorias
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Empleadoes") class="nav-link @ViewBag.A6">
+                                <i class="nav-icon fa-solid fa-user-plus"></i>
+                                <p>
+                                    Empleados
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Cargoes") class="nav-link @ViewBag.A11">
+                                <i class="nav-icon fa-solid fa-timeline"></i>
+                                <p>
+                                    Cargo
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Medicos") class="nav-link @ViewBag.A7">
+                                <i class="nav-icon fa-solid fa-user-doctor"></i>
+                                <p>
+                                    Medicos
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Sexoes") class="nav-link @ViewBag.A8">
+                                <i class="nav-icon fa-solid fa-venus-mars"></i>
+                                <p>
+                                    Sexo
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-closed">
+                            <a href="#" class="nav-link @ViewBag.A9">
+                                <i class="nav-icon fas fa-location-dot"></i>
+                                <p>
+                                    Ubicación
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index","Departamentoes") class="nav-link @ViewBag.A9A">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Departamento</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("Index","Municipios") class="nav-link @ViewBag.A9AA">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Municipio</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index","Pacientes") class="nav-link @ViewBag.A10">
+                                <i class="nav-icon fas fa-hospital-user"></i>
+                                <p>
+                                    Pacientes
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                if (User.IsInRole("Recepcionista"))
+                {
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Home")" class="nav-link @ViewBag.R0">
+                                <i class="nav-icon fas fa-info"></i>
+                                <p>
+                                    Información
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Ordens")" class="nav-link @ViewBag.R1">
+                                <i class="nav-icon fa fa-notes-medical"></i>
+                                <p>
+                                    Ordenes Pendientes
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("OrdenesFinalizadas", "Ordens")" class="nav-link @ViewBag.R2">
+                                <i class="nav-icon fa fa-file-medical"></i>
+                                <p>
+                                    Ordenes Finalizadas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Solicitudes", "Ordens")" class="nav-link @ViewBag.R3">
+                                <i class="nav-icon fas fa-folder-plus"></i>
+                                <p>
+                                    Solicitudes de  Ordenes
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Examen")" class="nav-link @ViewBag.R4">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Examenes
+
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("ListaExamenes", "Examen")" class="nav-link @ViewBag.R5">
+                                <i class="nav-icon fas fa-book-open"></i>
+                                <p>
+                                    Mis Examenes
+
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Facturas")" class="nav-link @ViewBag.R6">
+                                <i class="nav-icon fas fa-calculator"></i>
+                                <p>
+                                    Facturacion
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index", "Pacientes") class="nav-link @ViewBag.R7">
+                                <i class="nav-icon fas fa-hospital-user"></i>
+                                <p>
+                                    Pacientes
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index", "Medicos") class="nav-link @ViewBag.R8">
+                                <i class="nav-icon fas fa-book-medical"></i>
+                                <p>
+                                    Medicos
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Manage")" class="nav-link @ViewBag.R9">
+                                <i class="nav-icon fas fa-user-doctor"></i>
+                                <p>
+                                    Perfil de Usuario
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                if (User.IsInRole("Laboratorista"))
+                {
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Home")" class="nav-link  @ViewBag.L0">
+                                <i class="nav-icon fas fa-info"></i>
+                                <p>
+                                    Información
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Ordens")" class="nav-link @ViewBag.L1">
+                                <i class="nav-icon fas fa-folder-plus"></i>
+                                <p>
+                                    Ordenes Pendientes
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("OrdenesFinalizadas", "Ordens")" class="nav-link @ViewBag.L2">
+                                <i class="nav-icon fas fa-folder-plus"></i>
+                                <p>
+                                    Ordenes Finalizadas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Manage")" class="nav-link @ViewBag.L3">
+                                <i class="nav-icon fas fa-user-doctor"></i>
+                                <p>
+                                    Perfil de Usuario
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                }
+            }
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

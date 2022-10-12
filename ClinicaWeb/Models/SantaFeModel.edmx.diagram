@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6672099af34a431db5b92e08fafe4cd9" Name="Diagram1" ZoomLevel="88" >
+        <EntityTypeShape EntityType="SantaFeModel.Departamento" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.Municipio" Width="1.5" PointX="0.75" PointY="2.75" />
+        <EntityTypeShape EntityType="SantaFeModel.Paciente" Width="1.5" PointX="0.625" PointY="5.125" />
+        <EntityTypeShape EntityType="SantaFeModel.Sexo" Width="1.5" PointX="0.625" PointY="8.875" />
+        <EntityTypeShape EntityType="SantaFeModel.Categoria" Width="1.5" PointX="2.75" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.Examen" Width="1.5" PointX="5.125" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.ExamenParametro" Width="1.5" PointX="8" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.DetalleOrden" Width="1.5" PointX="3.375" PointY="3.375" />
+        <EntityTypeShape EntityType="SantaFeModel.Orden" Width="1.5" PointX="5.75" PointY="5.125" />
+        <EntityTypeShape EntityType="SantaFeModel.Medico" Width="1.5" PointX="4.375" PointY="8.625" />
+        <EntityTypeShape EntityType="SantaFeModel.DetalleFactura" Width="1.5" PointX="9" PointY="5.375" />
+        <EntityTypeShape EntityType="SantaFeModel.Empleado" Width="1.5" PointX="8" PointY="9.375" />
+        <EntityTypeShape EntityType="SantaFeModel.Factura" Width="1.5" PointX="11.75" PointY="6.75" />
+        <EntityTypeShape EntityType="SantaFeModel.Resultado" Width="1.5" PointX="7.25" PointY="3" />
+        <EntityTypeShape EntityType="SantaFeModel.DetalleResultado" Width="1.5" PointX="10.875" PointY="3.25" />
+        <EntityTypeShape EntityType="SantaFeModel.Parametro" Width="1.5" PointX="10.375" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.Reactivo" Width="1.5" PointX="13.375" PointY="0.5" />
+        <EntityTypeShape EntityType="SantaFeModel.Cargo" Width="1.5" PointX="11.375" PointY="10" />
+        <AssociationConnector Association="SantaFeModel.DepartamentoMunicipio" />
+        <AssociationConnector Association="SantaFeModel.MunicipioPaciente" />
+        <AssociationConnector Association="SantaFeModel.SexoPaciente" />
+        <AssociationConnector Association="SantaFeModel.CargoEmpleado" />
+        <AssociationConnector Association="SantaFeModel.MedicoOrden" />
+        <AssociationConnector Association="SantaFeModel.PacienteOrden" />
+        <AssociationConnector Association="SantaFeModel.EmpleadoOrden" />
+        <AssociationConnector Association="SantaFeModel.OrdenDetalleOrden" />
+        <AssociationConnector Association="SantaFeModel.CategoriaExamen" />
+        <AssociationConnector Association="SantaFeModel.ExamenDetalleOrden" />
+        <AssociationConnector Association="SantaFeModel.ExamenExamenParametro" />
+        <AssociationConnector Association="SantaFeModel.ParametroExamenParametro" />
+        <AssociationConnector Association="SantaFeModel.DetalleOrdenResultado" />
+        <AssociationConnector Association="SantaFeModel.ResultadoDetalleResultado" />
+        <AssociationConnector Association="SantaFeModel.ParametroDetalleResultado" />
+        <AssociationConnector Association="SantaFeModel.OrdenDetalleFactura" />
+        <AssociationConnector Association="SantaFeModel.FacturaDetalleFactura" />
+        <AssociationConnector Association="SantaFeModel.ReactivoParametro" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

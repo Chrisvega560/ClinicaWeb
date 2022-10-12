@@ -1,0 +1,200 @@
+﻿@model ClinicaWeb.Models.Paciente
+@{
+    ViewBag.Title = "Registrarse";
+    Layout = null;
+}
+@Styles.Render("~/Admin/light/fonts/font-awesome/v6/css/all.css")
+<!-- bootstrap -->
+@Styles.Render("~/Admin/assets/bundles/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Admin/login.css")
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta name="description" content="Laboratorio Clinico Santa - Fe" />
+<meta name="author" content="Laboratorio Clinico Santa - Fe" />
+<title>Registro | Laboratorio Clinico Santa - Fe</title>
+
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- start js include path -->
+@Scripts.Render("~/Admin/assets/bundles/jquery/jquery.min.js")
+<!-- bootstrap -->
+@Scripts.Render("~/Admin/assets/bundles/bootstrap/js/bootstrap.min.js")
+<!-- end js include path -->
+
+
+
+<div class="main">
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">@ViewBag.Title.</h2>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Completo" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="email" id="correo" name="correo" class="form-control" placeholder="Correo Electronico" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="text" id="cel" name="cel" class="form-control" placeholder="Celular" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="text" id="dir" name="dir" class="form-control" placeholder="Dirección" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("DepartamentoId", null, "Selecciona un Departamento", htmlAttributes: new { @class = "form-select", @id = "mun" })
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <select class="form-select" id="stat">
+                                <option>Seleccione un Municipio</option>
+                            </select>
+                            @*<input type="text" id="mun" name="mun" class="form-control" placeholder="Municipio" required />*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="">
+                            @Html.DropDownList("SexoId", null, "Selecciona tu sexo", htmlAttributes: new { @class = "form-select", @id = "sex" })
+                            @*<input type="text" id="sex" name="sex" class="form-control" placeholder="Sexo" required />*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraseña" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="password" id="ConfirPass" name="ConfirPass" class="form-control" placeholder="Confirmar Contraseña" required />
+                        </div>
+                    </div>
+                    <div class="form-group form-button">
+                        <button type="button" class="btn btn-round btn-primary" onclick="add()">Registrarse</button>
+                    </div>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="@Url.Content("~/Admin/light/img/Logo.png")" alt="sing up image"></figure>
+                    <a href="@Url.Action("Login","Account")" class="signup-image-link">Ya tienes una cuenta? Pulsa aqui!</a>
+                </div>
+            </div>
+
+        </div>
+    </section> 
+</div>
+
+<script type="text/javascript">
+
+   
+    $("#mun").change(function () {
+        $("#stat").empty();
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("Select","Home")",
+            content: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: { id: $("#mun").val() },
+            success: function (mems) {
+                $.each(mems, function (i, member) {
+                    $("#stat").append('<option value="'
+                        + member.Value + '">'
+                        + member.Text + '</option>');
+                });
+            },
+            error: function (ex) {
+                alert('Seleccione un Municipio por favor...');
+            }
+        });
+        return false;
+    });
+</script>
+
+@*<script type="text/javascript">
+
+                        function add() {
+
+                            var nombre = $("#nombre").val();
+                            var edad = $("#edad").val();
+                            var correo = $("#correo").val();
+                            var celular = $("#cel").val();
+                            var direccion = $("#dir").val();
+                            var Municipio = $("#mun").val();
+                            var sexo = $("#sex").val();
+                            var pass = $("#pass").val();
+                            var Cpas = $("#ConfirPass").val();
+
+                            if (pass == Cpas) {
+                                var datos = { nombre, edad, correo, celular, direccion, Municipio, sexo, pass };
+
+                                console.log(datos);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "@Url.Action("addpaciente", "Home")",
+                                    content: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    data: datos,
+                                    success: function (result) {
+                                        if (result.success == true)
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Se ha registrado exitosamente!',
+                                                'success'
+                                            )
+                                        else
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Se ha registrado exitosamente!',
+                                                'success'
+                                            );
+                                        setTimeout(function () {
+                                             window.location.href = "@Url.Action("OrdenesPacientes","Ordens")";
+                                        }, 2000);
+
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Ocurrio un error, revisa nuevamente!',
+                                        });
+                                    }
+                                });
+
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Las contraseñas no coinciden',
+                                });
+                            }
+
+
+                        }
+
+    </script>*@
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

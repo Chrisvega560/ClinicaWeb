@@ -1,0 +1,58 @@
+﻿@model ClinicaWeb.Models.Reactivo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reactivo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Maximo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Maximo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Minimo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Minimo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Densidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Densidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValoresNormales)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValoresNormales)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Periodo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Periodo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

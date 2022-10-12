@@ -1,0 +1,435 @@
+﻿@model ClinicaWeb.Models.Orden
+@{
+    ViewBag.Title = "Create";
+
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.R1 = "active";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewBag.P1 = "active";
+    }
+}
+@if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+{
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    Random random = new Random();
+    string cad = "";
+    for (int i = 0; i < 3; i++)
+    {
+        cad += charset.Substring(random.Next(0, 36), 1);
+    }
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-6">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Cod_Orden, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Cod_Orden, new { htmlAttributes = new { @class = "form-control", @Value = cad } })
+                        @Html.ValidationMessageFor(model => model.Cod_Orden, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", @Value =DateTime.Now.ToString() } })
+                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.EmpleadoId, "EmpleadoId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("EmpleadoId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EmpleadoId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmpleadoId, "Empleado", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Empleado.User, new { htmlAttributes = new { @class = "form-control", @Value = User.Identity.Name.ToString() } })
+                        @Html.ValidationMessageFor(model => model.EmpleadoId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <hr>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MedicoId, "Medicos", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-10">
+                                @Html.DropDownList("MedicoId", null, htmlAttributes: new { @class = "form-control", @id = "select2bs4" })
+                                @Html.ValidationMessageFor(model => model.MedicoId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalMedico" data-bs-placement="top" title="Añadir Medico">
+                                    <i class="fa fa-user-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PacienteId, "Pacientes", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-10">
+                                @Html.DropDownList("PacienteId", null, htmlAttributes: new { @class = "form-control", @id = "select2bs" })
+                                @Html.ValidationMessageFor(model => model.PacienteId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal" data-bs-placement="top" title="Añadir Paciente">
+                                    <i class="fa fa-user-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Lugar, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Lugar, new { htmlAttributes = new { @class = "form-control", @Value = "Laboratorio Bioclinico - Santa Fe" } })
+                        @Html.ValidationMessageFor(model => model.Lugar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="submit" value="Crear Orden y facturar" class="btn btn-success" style="margin-top:30px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Modal">Información del Paciente</h5>
+                <button type="button" class="close cerrarModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nombre Paciente</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Edad</label>
+                            <input type="number" id="edad" name="edad" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Correo</label>
+                            <input type="email" id="correo" name="correo" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Celular</label>
+                            <input type="text" id="cel" name="cel" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Direccion</label>
+                            <input type="text" id="dir" name="dir" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Municipio</label>
+                            @Html.DropDownList("MunicipioId", null, "Selecciona un municipio", htmlAttributes: new { @class = "form-control", @id = "mun" })
+                        </div>
+                        <div class="form-group">
+                            <label>Sexo</label>
+                            @Html.DropDownList("SexoId", null, "Selecciona tu sexo", htmlAttributes: new { @class = "form-control", @id = "sex" })
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="add()">Añadir Paciente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                <!--Modal Medico-->
+
+                <div class="modal fade" id="ModalMedico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="Modal">Información del Médico</h5>
+                                <button type="button" class="close cerrar" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nombre Del medico</label>
+                                            <input type="text" id="nombreMedico" name="nombreMedico" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Celular</label>
+                                            <input type="text" id="celularMedico" name="celularMedico" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="addMedico()">Añadir Medico</button>
+                            </div>
+
+
+
+
+
+                            <script type="text/javascript">
+
+                    function addMedico() {
+
+                        var nombre = $("#nombreMedico").val();
+                        var celular = $("#celularMedico").val();
+
+                        var data = { nombre, celular };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "@Url.Action("addMedico", "Ordens")",
+                            content: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: data,
+                                    success: function (result) {
+                                        if (result.success == true)
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Medico añadido exitosamente!',
+                                                'success'
+                                            ).then((value) => {
+                                                location.reload();
+                                            });
+                                        else
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Medico añadido exitosamente!',
+                                                'success',
+                                            ).then((value) => {
+                                                location.reload();
+                                            });
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Ocurrio un error, revisa nuevamente!',
+                                        });
+                                    }
+                        });
+                    }
+
+                            </script>
+
+
+
+                            <script type="text/javascript">
+
+                    function add() {
+
+                        var nombre = $("#nombre").val();
+                        var edad = $("#edad").val();
+                        var correo = $("#correo").val();
+                        var celular = $("#cel").val();
+                        var direccion = $("#dir").val();
+                        var Municipio = $("#mun").val();
+                        var sexo = $("#sex").val();
+
+                        var datos = { nombre, edad, correo, celular, direccion, Municipio, sexo };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "@Url.Action("addpaciente", "Ordens")",
+                            content: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: datos,
+                                    success: function (result) {
+                                        if (result.success == true)
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Paciente añadido exitosamente!',
+                                                'success'
+                                            )
+                                        else
+                                            Swal.fire(
+                                                'Buen trabajo!',
+                                                'Paciente añadido exitosamente!',
+                                                'success'
+                                            ).then((value) => {
+                                                location.reload();
+                                            });
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Ocurrio un error, revisa nuevamente!',
+                                        });
+                                    }
+                        });
+                    }
+
+                            </script>
+
+
+                            <script>
+                                $(".cerrarModal").click(function () {
+                                    $("#Modal").modal('hide')
+                                });
+                                $(".cerrar").click(function () {
+                                    $("#ModalMedico").modal('hide')
+                                });
+                                //Initialize Select2 Elements
+                                $('#select2bs4').select2({
+                                    theme: 'bootstrap4'
+                                })
+                                $('#select2bs').select2({
+                                    theme: 'bootstrap4'
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                }
+                else
+                {
+                string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                Random random = new Random();
+                string cad = "";
+                for (int i = 0; i < 3; i++)
+                {
+                cad += charset.Substring(random.Next(0, 36), 1);
+                }
+                <div class="page-bar" style="margin:0px">
+                    <div class="page-title-breadcrumb">
+                        <div class=" pull-left">
+                            <div class="page-title">Información de la Orden</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card card-box">
+                            <div class="card-head">
+                                <header>Añadir información</header>
+                            </div>
+                            <div class="card-body" id="bar-parent">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-body form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Codigo de Orden
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.EditorFor(model => model.Cod_Orden, new { htmlAttributes = new { @class = "form-control", @Value = cad } })
+                                                @Html.ValidationMessageFor(model => model.Cod_Orden, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Paciente
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.EditorFor(model => model.Paciente.Nombre_pac, new { htmlAttributes = new { @class = "form-control", @Value = User.Identity.Name.ToString() } })
+                                                @Html.ValidationMessageFor(model => model.PacienteId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Fecha de Cita
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", @type = "datetime-local", @required = "required" } })
+                                                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Lugar de Cita
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.EditorFor(model => model.Lugar, new { htmlAttributes = new { @class = "form-control", @Value = "Domicilio" } })
+                                                @Html.ValidationMessageFor(model => model.Lugar, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Empleado
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.EditorFor(model => model.Empleado.User, new { htmlAttributes = new { @class = "form-control", @Value = "Movil@gmail.com" } })
+                                                @Html.ValidationMessageFor(model => model.EmpleadoId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-5">
+                                                Medico
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-5">
+                                                @Html.DropDownList("MedicoId", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.MedicoId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="col-lg-12 p-t-20 text-center">
+                                            <button type="submit"
+                                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-circle btn-primary">
+                                                Crear Orden
+                                            </button>
+                                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-circle btn-danger" href="@Url.Action("OrdenesPacientes","Ordens")"> Cancelar</a>
+                                           
+                                        </div>
+                                    </div>
+
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Orden>
+
+@{
+    ViewBag.Title = "Ordenes Finalizadas";
+
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.L2 = "active";
+        ViewBag.R2 = "active";
+        ViewBag.A01 = "menu-open";
+        ViewBag.A1 = "active";
+        ViewBag.A1AA = "active";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+@{
+    int i = 0;
+}
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1>Ordenes</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <form action="@Url.Action("ListOrder", "Ordens")" method="get" class="navbar-form navbar-right" role="search">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" id="value" name="valor" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ol>
+
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 animated bounceInDown default-stripe">
+            <!-- Widget: user widget style 1 -->
+            <div class="card card-widget widget-user shadow">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username" style="margin-bottom:2px">@Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)</h3>
+                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.Paciente.Correo)</h5>
+                </div>
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="@Url.Content("~/adminlte/dist/img/SantaFe.png")" alt="User Avatar">
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">@Html.DisplayFor(modelItem => item.Cod_Orden)</h5>
+                                <span class="description-text">Codigo de Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header"> @Html.DisplayFor(modelItem => item.Fecha)</h5>
+                                <span class="description-text">Fecha de la Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="description-block">
+                                <a id='btnadd' href="@Url.Action("Details", "Ordens", new { id = item.Id })" class='btn-sm btn-block btn-primary'>Ver detalle</a>
+                                <span class="description-text">Ir a la Orden</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+
+
+    }
+</div>
+

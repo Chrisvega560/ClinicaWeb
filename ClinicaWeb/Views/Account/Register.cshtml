@@ -1,0 +1,150 @@
+﻿@model ClinicaWeb.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html style="background-color: #f8f8f8 ">
+
+<head>
+
+
+    @Styles.Render("~/Admin/light/fonts/font-awesome/v6/css/all.css")
+    <!-- bootstrap -->
+    @Styles.Render("~/Admin/assets/bundles/bootstrap/css/bootstrap.min.css")
+    @Styles.Render("~/Admin/login.css")
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="description" content="Laboratorio Clinico Santa - Fe" />
+    <meta name="author" content="Laboratorio Clinico Santa - Fe" />
+    <title>Registro | Laboratorio Clinico Santa - Fe</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- start js include path -->
+    @Scripts.Render("~/Admin/assets/bundles/jquery/jquery.min.js")
+    <!-- bootstrap -->
+    @Scripts.Render("~/Admin/assets/bundles/bootstrap/js/bootstrap.min.js")
+    <!-- end js include path -->
+
+</head>
+
+<body>
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+
+                        <h2 class="form-title">@ViewBag.Title</h2>
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Completo" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Correo Electronico" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" id="cel" name="cel" class="form-control" placeholder="Celular" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" id="dir" name="dir" class="form-control" placeholder="Dirección" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("DepartamentoId", null, "Selecciona un Departamento", htmlAttributes: new { @class = "form-select", @id = "mun", @Required= "required" })
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <select class="form-select" id="stat" name="mun" required>
+                                        <option>---</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                    @Html.DropDownList("DepartamentoId", null, "Selecciona un Departamento", htmlAttributes: new { @class = "form-select", @id = "dep" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <select class="form-select" id="municipio">
+                                            <option>Seleccione un Municipio</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.DropDownList("SexoId", null, "Selecciona tu sexo", htmlAttributes: new { @class = "form-select", @id = "sex", @Name = "sex" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @Placeholder = "Contraseña" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @Placeholder = "Confirmar contraseña" })
+                                </div>
+                            </div>
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group form-button">
+                                <button type="submit" class="btn btn-round btn-primary">Registrarse</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="@Url.Content("~/Admin/light/img/Logo.png")" alt="sing up image"></figure>
+                        <a href="@Url.Action("Login","Account")" class="signup-image-link">Ya tienes una cuenta? Pulsa aqui!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript">
+
+
+    $("#mun").change(function () {
+        $("#stat").empty();
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("Select","Account")",
+            content: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: { id: $("#mun").val() },
+            success: function (result) {
+                $.each(result, function (i, res) {
+                    $("#stat").append('<option value="'
+                        + res.Value + '">'
+                        + res.Text + '</option>');
+                });
+            },
+            error: function (ex) {
+                alert(ex.result);
+                $("#stat").append('<option>Seleccione un Municipio</option>');
+            }
+        });
+        return false;
+    });
+    </script>
+</body>
+</html>
+

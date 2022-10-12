@@ -1,0 +1,586 @@
+﻿
+@{
+    ViewBag.Title = "PrincipalPage";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Laboratorio BioClinico Santa Fe">
+    <link href="@Url.Content("~/Principal/assets/images/santafe/Logo.png")" rel="icon">
+    <title>Laboratorio BioClinico Santa Fe</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Roboto:wght@400;700&amp;display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @Styles.Render("~/Principal/assets/css/libraries.css")
+    @Styles.Render("~/Principal/assets/css/style.css")
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="preloader">
+            <div class="loading"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <!-- /.preloader -->
+        <!-- =========================
+            Header
+        =========================== -->
+        <header class="header header-layout1">
+            <div class="header-topbar">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <ul class="contact__list d-flex flex-wrap align-items-center list-unstyled mb-0">
+                                    <li>
+                                        <i class="icon-phone"></i><a href="tel:+50582463210" style="font-size: 17px;">8246-3210</a>
+                                    </li>
+                                    <li>
+                                        <i class="icon-location"></i><a href="#" style="font-size: 17px;">Ubicación: Masatepe, Nicaragua</a>
+                                    </li>
+                                    <li>
+                                        <i class="icon-clock"></i><a style="font-size: 17px;">Lun - Vie 700 am - 18:00 pm</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.col-12 -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container -->
+            </div>
+            <!-- /.header-top -->
+            <nav class="navbar navbar-expand-lg sticky-navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="@Url.Content("~/Principal/assets/images/santafe/Logo.png")" class="logo-light" alt="logo" height="111px">
+                        <img src="@Url.Content("~/Principal/assets/images/santafe/Logo.png")" class="logo-dark" alt="logo" height="111px">
+                    </a>
+                    <button class="navbar-toggler" type="button">
+                        <span class="menu-lines"><span></span></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNavigation">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav__item has-dropdown">
+                                <a href="#Home" data-toggle="dropdown" class="nav__item-link">Inicio</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item has-dropdown">
+                                <a href="#Acerca" data-toggle="dropdown" class="nav__item-link">Sobre Nosotros</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item has-dropdown">
+                                <a href="#Servicios" data-toggle="dropdown" class="nav__item-link">Servicios</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item has-dropdown">
+                                <a href="#Galeria" data-toggle="dropdown" class="nav__item-link">Galeria</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item has-dropdown">
+                                <a href="#contact" data-toggle="dropdown" class="nav__item-link">Contacto</a>
+                            </li>
+                        </ul>
+                        <!-- /.navbar-nav -->
+                        <button class="close-mobile-menu d-block d-lg-none"><i class="fas fa-times"></i></button>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                    <div class="d-none d-xl-flex align-items-center position-relative ml-30">
+
+                        <a href="@Url.Action("login","Account")" class="btn btn__primary btn__rounded ml-30">
+                            <i class="icon-calendar"></i>
+                            <span>Iniciar Sesion</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- /.container -->
+            </nav>
+            <!-- /.navabr -->
+        </header>
+        <!-- /.Header -->
+        <!-- ============================
+            Slider
+        ============================== -->
+        <section class="slider">
+            <div class="slick-carousel m-slides-0" data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700,"fade": true,"cssEase": "linear"}'>
+                <div class="slide-item align-v-h">
+                    <div class="bg-img"><img src="@Url.Content("~/Principal/assets/images/santafe/5.jpg")" alt="slide img"></div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">
+                                <div class="slide__content">
+                                    <h2 class="slide__title" style="color: #fff;text-shadow: 0.1em 0.1em #000">Laboratorio Santa Fe</h2>
+                                    <p class="slide__desc" style="color: #fff;text-shadow: 0.1em 0.1em #000">Servicios de Laboratorio Disponibles</p>
+
+                                    <!-- /.features-list -->
+                                </div>
+                                <!-- /.slide-content -->
+                            </div>
+                            <!-- /.col-xl-7 -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.slide-item -->
+                <div class="slide-item align-v-h" id="Home">
+                    <div class="bg-img"><img src="@Url.Content("~/Principal/assets/images/santafe/8.jpg")" alt="slide img"></div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">
+                                <div class="slide__content">
+                                    <h2 class="slide__title" style="color: #fff;text-shadow: 0.1em 0.1em #000">Laboratorio Santa Fe</h2>
+                                    <p class="slide__desc" style="color: #fff;text-shadow: 0.1em 0.1em #000">Brindamos una amplia variedad de servicios de laboratorio utilizando la última tecnología en equipos y procedimientos profesionales.</p>
+
+                                </div>
+                                <!-- /.slide-content -->
+                            </div>
+                            <!-- /.col-xl-7 -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.slide-item -->
+            </div>
+            <!-- /.carousel -->
+        </section>
+        <!-- /.slider -->
+        <!-- ============================
+            contact info
+        ============================== -->
+        <section class="contact-info py-0">
+            <div class="container">
+                <div class="row row-no-gutter boxes-wrapper">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="contact-box d-flex">
+                            <div class="contact__icon">
+                                <i class="icon-call3"></i>
+                            </div>
+                            <!-- /.contact__icon -->
+                            <div class="contact__content">
+                                <h2 class="contact__title">En casos de Emergencias</h2>
+                                <p class="contact__desc">En momentos difíciles puede contar con nosotros.</p>
+                                <a href="tel:+50584211372" class="phone__number">
+                                    <i class="icon-phone"></i> <span>8421-1372</span>
+                                </a>
+                                <a href="tel:+5058246210" class="phone__number">
+                                    <i class="icon-phone"></i> <span>8246-3210</span>
+                                </a>
+                            </div>
+                            <!-- /.contact__content -->
+                        </div>
+                        <!-- /.contact-box -->
+                    </div>
+                    <!-- /.col-md-4 -->
+                    <div class="col-sm-12 col-md-4">
+                        <div class="contact-box d-flex">
+                            <div class="contact__icon">
+                                <i class="icon-health-report"></i>
+                            </div>
+                            <!-- /.contact__icon -->
+                            <div class="contact__content">
+                                <h2 class="contact__title">Citas</h2>
+                                <p class="contact__desc" style="text-align: justify;">
+                                    En esta sección puede solicitar una cita para cualquiera de las especialidades que ofrecemos garantizando una experiencia grata y ágil.
+
+                                </p>
+                                <a href="doctors-timetable.html" class="btn btn__white btn__outlined btn__rounded">
+                                    <span>Iniciar Sesion</span><i class="icon-arrow-right"></i>
+                                </a>
+                            </div>
+                            <!-- /.contact__content -->
+                        </div>
+                        <!-- /.contact-box -->
+                    </div>
+                    <!-- /.col-md-4 -->
+                    <div class="col-sm-12 col-md-4">
+                        <div class="contact-box d-flex">
+                            <div class="contact__icon">
+                                <i class="icon-heart2"></i>
+                            </div>
+                            <!-- /.contact__icon -->
+                            <div class="contact__content">
+                                <h2 class="contact__title">Horario de atención</h2>
+                                <ul class="time__list list-unstyled mb-0">
+                                    <li><span>Lun - Vie </span><span> 7.00 - 18:00 pm</span></li>
+                                    <li><span>Sábado</span><span>7.00 - 12:00 pm</span></li>
+                                    <li><span>Domingo</span><span>Cerrado</span></li>
+                                </ul>
+                            </div>
+                            <!-- /.contact__content -->
+                        </div>
+                        <!-- /.contact-box -->
+                    </div>
+                    <!-- /.col-md-4 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /.contact-info -->
+        <!-- ========================
+          About Layout 2
+        =========================== -->
+        <section class="about-layout2 pb-0" id="Acerca">
+            <div class="container">
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-5">
+                        <div class="text-with-icon">
+                            <div class="text__icon">
+                                <i class="icon-doctor"></i>
+                            </div>
+                            <div class="text__content">
+                                <p class="heading__desc font-weight-bold color-secondary mb-30">
+                                    Hemos equipado nuestro laboratorio con modernos y precisos equipos automáticos para la ejecución de todos los análisis rutinarios de laboratorio, así como de muchas pruebas más especializadas que son frecuentemente solicitadas
+                                    por los médicos.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="video-banner-layout2 bg-overlay">
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/4.jpg")" alt="about" height="307px" class="w-100">
+                        </div>
+                        <!-- /.video-banner -->
+                    </div>
+                    <!-- /.col-lg-6 -->
+                    <div class="col-sm-12 col-md-12 col-lg-7">
+                        <div class="about__text bg-white">
+                            <p class="heading__desc mb-30" style="text-align: justify;">
+                                El Laboratorio Bioclinico "Santa Fe" ubicado en el municipio de Masatepe, nace en el año 2013 fundado por la licenciada Silvia Rodríguez, en el cual se ofrecen una variedad de exámenes tales como: bacteriología, química sanguínea,
+                                hematología, uroanálisis, serología, parasitología y entre otras.
+                            </p>
+                            <p class="heading__desc mb-30" style="text-align: justify;">Este laboratorio consta de buen prestigio para su público en general, brindándole una buena calidad de trabajo y ética profesional para sus pacientes, recomendado por pacientes y doctores.</p>
+                            <ul class="list-items list-unstyled">
+                                <li style="text-align: justify;">
+                                    <span style="color: #000;font-style:italic; font-weight: bold;">Mision: </span> Proporcionar servicios de análisis clinico confiable con calidad y humanismo para apoyar en el diagnóstico de las diferentes patologías clínicas,
+                                    en base a la ética profesional y alto compromiso en la salud.
+                                </li>
+                                <li style="text-align: justify;">
+                                    <span style="color: #000; font-style:italic; font-weight: bold;">Vision: </span> Ofrecer servicios de calidad y humanismo en el menor tiempo posible, utilizando personal capacitado y la tecnologia disponible; empleando
+                                    un ambiente de amabilidad y confiabilidad.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.col-lg-6 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /.About Layout 2 -->
+        <!-- ======================
+         Work Process
+        ========================= -->
+        <section class="work-process work-process-carousel pt-150 pb-0 bg-overlay bg-overlay-secondary services-layout1 services-carousel">
+            <div class="bg-img"><img src="@Url.Content("~/Principal/assets/images/banners/1.jpg")" alt="background"></div>
+            <div class="heading text-center mb-60">
+                <h3 class="heading__title" style="color: #fff;" id="Servicios">Servicios Generales de Laboratorio</h3>
+            </div>
+            <div class="container">
+                <div class="row heading-layout2">
+                    <div class="col-12">
+                        <h2 class="heading__subtitle color-primary">Bienvenido al Laboratorio Bioclinico Santa fe </h2>
+                    </div>
+                    <!-- /.col-12 -->
+                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-5">
+                        <h3 class="heading__title color-white">
+                            Mejor Calidad en Laboratorio Clínico
+                        </h3>
+                    </div>
+                    <!-- /.col-xl-5 -->
+                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 offset-xl-1">
+                        <p class="heading__desc font-weight-bold color-gray mb-40" style="text-align: justify;">
+                            Somos es un laboratorio moderno y completo, que ofrece todo tipo de exámenes, tanto de rutina como especiales, con la mejor calidad y costo. <br> Contamos con más de 24 tipos de exámenes. Nuestro amplio catálogo permite a nuestros
+                            clientes realizarse todos sus exámenes en un mismo lugar.
+                        </p>
+                        <ul class="list-items list-items-layout2 list-items-light list-horizontal list-unstyled">
+                            <li>Excelencia</li>
+                            <li>Compromiso</li>
+                            <li>Calidad</li>
+                            <li>Vanguardia Tecnológica</li>
+                        </ul>
+                    </div>
+                    <!-- /.col-xl-6 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="carousel-container mt-90">
+                            <div class="slick-carousel" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "infinite":false, "arrows": false, "dots": false, "responsive": [{"breakpoint": 1200, "settings": {"slidesToShow": 3}}, {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                                <!-- process item #1 -->
+                                <div class="process-item">
+                                    <span class="process__number">01</span>
+                                    <div class="process__icon">
+                                        <i class="icon-health-report"></i>
+                                    </div>
+                                    <!-- /.process__icon -->
+                                    <h4 class="process__title">Bacteriologia</h4>
+                                    <a href="#" class="btn btn__secondary btn__link">
+                                        <span>Cotiza Ahora</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <!-- /.process-item -->
+                                <!-- process-item #2 -->
+                                <div class="process-item">
+                                    <span class="process__number">02</span>
+                                    <div class="process__icon">
+                                        <i class="icon-dna"></i>
+                                    </div>
+                                    <!-- /.process__icon -->
+                                    <h4 class="process__title">Coagulación</h4>
+                                    <a href="#" class="btn btn__secondary btn__link">
+                                        <span>Cotiza Ahora</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <!-- /.process-item -->
+                                <!-- process-item #3 -->
+                                <div class="process-item">
+                                    <span class="process__number">03</span>
+                                    <div class="process__icon">
+                                        <i class="icon-medicine"></i>
+                                    </div>
+                                    <!-- /.process__icon -->
+                                    <h4 class="process__title">Hematología</h4>
+                                    <a href="#" class="btn btn__secondary btn__link">
+                                        <span>Cotiza Ahora</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <!-- /.process-item -->
+                                <!-- process-item #4 -->
+                                <div class="process-item">
+                                    <span class="process__number">04</span>
+                                    <div class="process__icon">
+                                        <i class="icon-stethoscope"></i>
+                                    </div>
+                                    <!-- /.process__icon -->
+                                    <h4 class="process__title">Parasitologia</h4>
+                                    <a href="#" class="btn btn__secondary btn__link">
+                                        <span>Cotiza Ahora</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <!-- /.process-item -->
+                                <!-- process-item #5 -->
+                                <div class="process-item">
+                                    <span class="process__number">05</span>
+                                    <div class="process__icon">
+                                        <i class="icon-head"></i>
+                                    </div>
+                                    <!-- /.process__icon -->
+                                    <h4 class="process__title">Entre Otros</h4>
+                                    <a href="#" class="btn btn__secondary btn__link">
+                                        <span>Cotiza Ahora</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <!-- /.process-item -->
+                            </div>
+                            <!-- /.carousel -->
+                        </div>
+                    </div>
+                    <!-- /.col-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /.Work Process -->
+        <!-- ========================
+         gallery layout2
+        =========================== -->
+        <section class="gallery-layout2 pt-130 pb-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3 text-center" id="Galeria">
+                        <div class="heading mb-60">
+                            <h2 class="heading__subtitle">Laboratorio BioClinico Santa Fe</h2>
+                            <h3 class="heading__title">Una Vista a nuestras oficinas.</h3>
+                        </div>
+                        <!-- /heading -->
+                    </div>
+                    <!-- /.col-lg-6 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/19.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/19.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/22.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/22.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/6.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/6.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/34.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/34.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/27.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/27.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="gallery-img">
+                            <a class="popup-gallery-item" href="@Url.Content("~/Principal/assets/images/santafe/17.jpg")"><i class="fas fa-eye"></i></a>
+                            <img src="@Url.Content("~/Principal/assets/images/santafe/17.jpg")" alt="gallery img">
+                        </div>
+                        <!-- /.gallery-img -->
+                    </div>
+                    <!-- /.col-lg-4 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /.gallery layout2 -->
+        <!-- =========================
+                Google Map
+        =========================  -->
+        <section class="google-map py-0">
+            <iframe frameborder="0" height="500" width="100%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.8191079104904!2d-86.1456917!3d11.917673899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f74057375196baf%3A0xca51c1771839fd54!2sCl%C3%ADnica%20M%C3%A9dica%20Familiar!5e0!3m2!1ses-419!2sni!4v1663383996701!5m2!1ses-419!2sni"></iframe>
+        </section>
+        <!-- /.GoogleMap -->
+        <!-- ========================
+          Footer
+        ========================== -->
+        <footer class="footer">
+            <div class="footer-primary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="footer-widget-about">
+                                <img src="@Url.Content("~/Principal/assets/images/santafe/LogoFooter.png")" alt="logo" class="mb-30" style="border-radius: 40%;height:167px">
+                                <p class="color-gray" style="text-align: justify;">
+                                    Somos un laboratorio clínico basado en conceptos modernos establecidos y aceptados para la práctica de análisis de laboratorios más actuales.
+                                </p>
+                            </div>
+                            <!-- /.footer-widget__content -->
+                        </div>
+                        <!-- /.col-xl-2 -->
+                        <div class="col-sm-6 col-md-6 col-lg-2 offset-lg-1">
+                            <div class="footer-widget-nav">
+                                <h6 class="footer-widget__title">Servicios</h6>
+                                <nav>
+                                    <ul class="list-unstyled">
+                                        <li>
+
+                                            <a style="color:#fff;"><i class="fa fa-truck-medical"></i> Servicios a domicilio</a>
+                                        </li>
+                                        <li>
+
+                                            <a style="color:#fff;"><i class="fa fa-globe"></i> Consulta de resultados en linea</a>
+                                        </li>
+                                        <li>
+
+                                            <a style="color:#fff;"><i class="fa fa-microscope"></i> Servicio de laboratorio de referencia</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- /.footer-widget__content -->
+                        </div>
+                        <!-- /.col-lg-2 -->
+                        <div class="col-sm-6 col-md-6 col-lg-2">
+                            <div class="footer-widget-nav">
+                                <h6 class="footer-widget__title">Redes Sociales</h6>
+                                <nav>
+                                    <ul class="list-unstyled">
+
+                                        <li>
+                                            <a href="https://www.facebook.com/profile.php?id=100028749860044"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://maps.app.goo.gl/je9nWXPpkzfHj6YD6"><i class="fa-brands fa-google"></i> Google</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- /.footer-widget__content -->
+                        </div>
+                        <!-- /.col-lg-2 -->
+                        <div class="col-sm-12 col-md-6 col-lg-4" id="contact">
+                            <div class="footer-widget-contact">
+                                <h6 class="footer-widget__title color-heading">Contactanos!</h6>
+                                <ul class="contact-list list-unstyled">
+                                    <li>Si tienes alguna pregunta, no dudes en llamarnos.</li>
+                                    <li>
+                                        <a href="tel:+50584211372" class="phone__number">
+                                            <i class="icon-phone"></i> Claro<span> ->  8421-1372</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="tel:+50582463210" class="phone__number">
+                                            <i class="icon-phone"></i> Movistar <span> -> 8246-3210</span>
+                                        </a>
+                                    </li>
+                                    <li class="color-body">Reparto BAVINIC, del mondongazo 2c Abajo 1⁄2 al Norte casa 31-32 Masatepe, Nicaragua.</li>
+                                </ul>
+                                <!-- /.footer-widget__content -->
+                            </div>
+                            <!-- /.col-lg-2 -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.footer-primary -->
+
+        </footer>
+        <!-- /.Footer -->
+        <button id="scrollTopBtn"><i class="fas fa-long-arrow-alt-up"></i></button>
+    </div>
+    <!-- /.wrapper -->
+    @Scripts.Render("~/Principal/assets/js/jquery-3.5.1.min.js")
+    @Scripts.Render("~/Principal/assets/js/plugins.js")
+    @Scripts.Render("~/Principal/assets/js/main.js")
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+
+
+</html>
+

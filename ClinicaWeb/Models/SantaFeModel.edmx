@@ -1,0 +1,1205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SantaFeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SantaFeModelStoreContainer">
+    <EntitySet Name="Departamentos" EntityType="SantaFeModel.Store.Departamentos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Municipios" EntityType="SantaFeModel.Store.Municipios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pacientes" EntityType="SantaFeModel.Store.Pacientes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sexos" EntityType="SantaFeModel.Store.Sexos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categorias" EntityType="SantaFeModel.Store.Categorias" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Examenes" EntityType="SantaFeModel.Store.Examenes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ExamenesParametros" EntityType="SantaFeModel.Store.ExamenesParametros" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DetallesOrdenes" EntityType="SantaFeModel.Store.DetallesOrdenes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ordenes" EntityType="SantaFeModel.Store.Ordenes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Medicos" EntityType="SantaFeModel.Store.Medicos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DetallesFacturas" EntityType="SantaFeModel.Store.DetallesFacturas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Empleados" EntityType="SantaFeModel.Store.Empleados" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Facturas" EntityType="SantaFeModel.Store.Facturas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Resultados" EntityType="SantaFeModel.Store.Resultados" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DetallesResultados" EntityType="SantaFeModel.Store.DetallesResultados" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Parametros" EntityType="SantaFeModel.Store.Parametros" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Reactivos" EntityType="SantaFeModel.Store.Reactivos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CargoSet" EntityType="SantaFeModel.Store.CargoSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DepartamentoMunicipio" Association="SantaFeModel.Store.DepartamentoMunicipio">
+      <End Role="Departamento" EntitySet="Departamentos" />
+      <End Role="Municipio" EntitySet="Municipios" />
+    </AssociationSet>
+    <AssociationSet Name="MunicipioPaciente" Association="SantaFeModel.Store.MunicipioPaciente">
+      <End Role="Municipio" EntitySet="Municipios" />
+      <End Role="Paciente" EntitySet="Pacientes" />
+    </AssociationSet>
+    <AssociationSet Name="SexoPaciente" Association="SantaFeModel.Store.SexoPaciente">
+      <End Role="Sexo" EntitySet="Sexos" />
+      <End Role="Paciente" EntitySet="Pacientes" />
+    </AssociationSet>
+    <AssociationSet Name="CargoEmpleado" Association="SantaFeModel.Store.CargoEmpleado">
+      <End Role="Cargo" EntitySet="CargoSet" />
+      <End Role="Empleado" EntitySet="Empleados" />
+    </AssociationSet>
+    <AssociationSet Name="MedicoOrden" Association="SantaFeModel.Store.MedicoOrden">
+      <End Role="Medico" EntitySet="Medicos" />
+      <End Role="Orden" EntitySet="Ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="PacienteOrden" Association="SantaFeModel.Store.PacienteOrden">
+      <End Role="Paciente" EntitySet="Pacientes" />
+      <End Role="Orden" EntitySet="Ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="EmpleadoOrden" Association="SantaFeModel.Store.EmpleadoOrden">
+      <End Role="Empleado" EntitySet="Empleados" />
+      <End Role="Orden" EntitySet="Ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="OrdenDetalleOrden" Association="SantaFeModel.Store.OrdenDetalleOrden">
+      <End Role="Orden" EntitySet="Ordenes" />
+      <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+    </AssociationSet>
+    <AssociationSet Name="CategoriaExamen" Association="SantaFeModel.Store.CategoriaExamen">
+      <End Role="Categoria" EntitySet="Categorias" />
+      <End Role="Examen" EntitySet="Examenes" />
+    </AssociationSet>
+    <AssociationSet Name="ExamenDetalleOrden" Association="SantaFeModel.Store.ExamenDetalleOrden">
+      <End Role="Examen" EntitySet="Examenes" />
+      <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+    </AssociationSet>
+    <AssociationSet Name="ExamenExamenParametro" Association="SantaFeModel.Store.ExamenExamenParametro">
+      <End Role="Examen" EntitySet="Examenes" />
+      <End Role="ExamenParametro" EntitySet="ExamenesParametros" />
+    </AssociationSet>
+    <AssociationSet Name="ParametroExamenParametro" Association="SantaFeModel.Store.ParametroExamenParametro">
+      <End Role="Parametro" EntitySet="Parametros" />
+      <End Role="ExamenParametro" EntitySet="ExamenesParametros" />
+    </AssociationSet>
+    <AssociationSet Name="DetalleOrdenResultado" Association="SantaFeModel.Store.DetalleOrdenResultado">
+      <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+      <End Role="Resultado" EntitySet="Resultados" />
+    </AssociationSet>
+    <AssociationSet Name="ResultadoDetalleResultado" Association="SantaFeModel.Store.ResultadoDetalleResultado">
+      <End Role="Resultado" EntitySet="Resultados" />
+      <End Role="DetalleResultado" EntitySet="DetallesResultados" />
+    </AssociationSet>
+    <AssociationSet Name="ParametroDetalleResultado" Association="SantaFeModel.Store.ParametroDetalleResultado">
+      <End Role="Parametro" EntitySet="Parametros" />
+      <End Role="DetalleResultado" EntitySet="DetallesResultados" />
+    </AssociationSet>
+    <AssociationSet Name="OrdenDetalleFactura" Association="SantaFeModel.Store.OrdenDetalleFactura">
+      <End Role="Orden" EntitySet="Ordenes" />
+      <End Role="DetalleFactura" EntitySet="DetallesFacturas" />
+    </AssociationSet>
+    <AssociationSet Name="FacturaDetalleFactura" Association="SantaFeModel.Store.FacturaDetalleFactura">
+      <End Role="Factura" EntitySet="Facturas" />
+      <End Role="DetalleFactura" EntitySet="DetallesFacturas" />
+    </AssociationSet>
+    <AssociationSet Name="ReactivoParametro" Association="SantaFeModel.Store.ReactivoParametro">
+      <End Role="Reactivo" EntitySet="Reactivos" />
+      <End Role="Parametro" EntitySet="Parametros" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Departamentos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_dpto" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Municipios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_mun" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DepartamentoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pacientes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_pac" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Edad" Type="int" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Celular" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MunicipioId" Type="int" Nullable="false" />
+    <Property Name="SexoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sexos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipoSexo" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Examenes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_exa" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Precio" Type="float" Nullable="false" />
+    <Property Name="CategoriaId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamenesParametros">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExamenId" Type="int" Nullable="false" />
+    <Property Name="ParametroId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetallesOrdenes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cantidad" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FechaFinal" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Precio" Type="float" Nullable="true" />
+    <Property Name="Estado" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OrdenId" Type="int" Nullable="false" />
+    <Property Name="ExamenId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ordenes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cod_Orden" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lugar" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MedicoId" Type="int" Nullable="false" />
+    <Property Name="PacienteId" Type="int" Nullable="false" />
+    <Property Name="EmpleadoId" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medicos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreMed" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Celular" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="DetallesFacturas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cantidad" Type="float" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PrecioUnitario" Type="float" Nullable="false" />
+    <Property Name="Subtotal" Type="float" Nullable="false" />
+    <Property Name="OrdenId" Type="int" Nullable="false" />
+    <Property Name="FacturaId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Empleados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom_Empleado" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CargoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Facturas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaFac" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CodFactura" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resultados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DetalleOrdenId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetallesResultados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExamenResultado" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Observacion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ResultadoId" Type="int" Nullable="false" />
+    <Property Name="ParametroId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parametros">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom_Parametro" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReactivoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reactivos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Maximo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Minimo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Densidad" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ValoresNormales" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Periodo" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="CargoSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="DepartamentoMunicipio">
+    <End Role="Departamento" Type="SantaFeModel.Store.Departamentos" Multiplicity="1" />
+    <End Role="Municipio" Type="SantaFeModel.Store.Municipios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Municipio">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MunicipioPaciente">
+    <End Role="Municipio" Type="SantaFeModel.Store.Municipios" Multiplicity="1" />
+    <End Role="Paciente" Type="SantaFeModel.Store.Pacientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Municipio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paciente">
+        <PropertyRef Name="MunicipioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SexoPaciente">
+    <End Role="Sexo" Type="SantaFeModel.Store.Sexos" Multiplicity="1" />
+    <End Role="Paciente" Type="SantaFeModel.Store.Pacientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sexo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paciente">
+        <PropertyRef Name="SexoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CargoEmpleado">
+    <End Role="Cargo" Type="SantaFeModel.Store.CargoSet" Multiplicity="1" />
+    <End Role="Empleado" Type="SantaFeModel.Store.Empleados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="CargoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicoOrden">
+    <End Role="Medico" Type="SantaFeModel.Store.Medicos" Multiplicity="1" />
+    <End Role="Orden" Type="SantaFeModel.Store.Ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medico">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="MedicoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PacienteOrden">
+    <End Role="Paciente" Type="SantaFeModel.Store.Pacientes" Multiplicity="1" />
+    <End Role="Orden" Type="SantaFeModel.Store.Ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paciente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="PacienteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmpleadoOrden">
+    <End Role="Empleado" Type="SantaFeModel.Store.Empleados" Multiplicity="1" />
+    <End Role="Orden" Type="SantaFeModel.Store.Ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="EmpleadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrdenDetalleOrden">
+    <End Role="Orden" Type="SantaFeModel.Store.Ordenes" Multiplicity="1" />
+    <End Role="DetalleOrden" Type="SantaFeModel.Store.DetallesOrdenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleOrden">
+        <PropertyRef Name="OrdenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoriaExamen">
+    <End Role="Categoria" Type="SantaFeModel.Store.Categorias" Multiplicity="1" />
+    <End Role="Examen" Type="SantaFeModel.Store.Examenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Examen">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ExamenDetalleOrden">
+    <End Role="Examen" Type="SantaFeModel.Store.Examenes" Multiplicity="1" />
+    <End Role="DetalleOrden" Type="SantaFeModel.Store.DetallesOrdenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Examen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleOrden">
+        <PropertyRef Name="ExamenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ExamenExamenParametro">
+    <End Role="Examen" Type="SantaFeModel.Store.Examenes" Multiplicity="1" />
+    <End Role="ExamenParametro" Type="SantaFeModel.Store.ExamenesParametros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Examen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExamenParametro">
+        <PropertyRef Name="ExamenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ParametroExamenParametro">
+    <End Role="Parametro" Type="SantaFeModel.Store.Parametros" Multiplicity="1" />
+    <End Role="ExamenParametro" Type="SantaFeModel.Store.ExamenesParametros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExamenParametro">
+        <PropertyRef Name="ParametroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DetalleOrdenResultado">
+    <End Role="DetalleOrden" Type="SantaFeModel.Store.DetallesOrdenes" Multiplicity="1" />
+    <End Role="Resultado" Type="SantaFeModel.Store.Resultados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetalleOrden">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resultado">
+        <PropertyRef Name="DetalleOrdenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ResultadoDetalleResultado">
+    <End Role="Resultado" Type="SantaFeModel.Store.Resultados" Multiplicity="1" />
+    <End Role="DetalleResultado" Type="SantaFeModel.Store.DetallesResultados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resultado">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleResultado">
+        <PropertyRef Name="ResultadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ParametroDetalleResultado">
+    <End Role="Parametro" Type="SantaFeModel.Store.Parametros" Multiplicity="1" />
+    <End Role="DetalleResultado" Type="SantaFeModel.Store.DetallesResultados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleResultado">
+        <PropertyRef Name="ParametroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrdenDetalleFactura">
+    <End Role="Orden" Type="SantaFeModel.Store.Ordenes" Multiplicity="1" />
+    <End Role="DetalleFactura" Type="SantaFeModel.Store.DetallesFacturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFactura">
+        <PropertyRef Name="OrdenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FacturaDetalleFactura">
+    <End Role="Factura" Type="SantaFeModel.Store.Facturas" Multiplicity="1" />
+    <End Role="DetalleFactura" Type="SantaFeModel.Store.DetallesFacturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFactura">
+        <PropertyRef Name="FacturaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReactivoParametro">
+    <End Role="Reactivo" Type="SantaFeModel.Store.Reactivos" Multiplicity="1" />
+    <End Role="Parametro" Type="SantaFeModel.Store.Parametros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reactivo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parametro">
+        <PropertyRef Name="ReactivoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SantaFeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SantaFeModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departamentos" EntityType="SantaFeModel.Departamento" />
+          <EntitySet Name="Municipios" EntityType="SantaFeModel.Municipio" />
+          <EntitySet Name="Pacientes" EntityType="SantaFeModel.Paciente" />
+          <EntitySet Name="Sexos" EntityType="SantaFeModel.Sexo" />
+          <EntitySet Name="Categorias" EntityType="SantaFeModel.Categoria" />
+          <EntitySet Name="Examenes" EntityType="SantaFeModel.Examen" />
+          <EntitySet Name="ExamenesParametros" EntityType="SantaFeModel.ExamenParametro" />
+          <EntitySet Name="DetallesOrdenes" EntityType="SantaFeModel.DetalleOrden" />
+          <EntitySet Name="Ordenes" EntityType="SantaFeModel.Orden" />
+          <EntitySet Name="Medicos" EntityType="SantaFeModel.Medico" />
+          <EntitySet Name="DetallesFacturas" EntityType="SantaFeModel.DetalleFactura" />
+          <EntitySet Name="Empleados" EntityType="SantaFeModel.Empleado" />
+          <EntitySet Name="Facturas" EntityType="SantaFeModel.Factura" />
+          <EntitySet Name="Resultados" EntityType="SantaFeModel.Resultado" />
+          <EntitySet Name="DetallesResultados" EntityType="SantaFeModel.DetalleResultado" />
+          <EntitySet Name="Parametros" EntityType="SantaFeModel.Parametro" />
+          <EntitySet Name="Reactivos" EntityType="SantaFeModel.Reactivo" />
+          <EntitySet Name="CargoSet" EntityType="SantaFeModel.Cargo" />
+          <AssociationSet Name="DepartamentoMunicipio" Association="SantaFeModel.DepartamentoMunicipio">
+            <End Role="Departamento" EntitySet="Departamentos" />
+            <End Role="Municipio" EntitySet="Municipios" />
+          </AssociationSet>
+          <AssociationSet Name="MunicipioPaciente" Association="SantaFeModel.MunicipioPaciente">
+            <End Role="Municipio" EntitySet="Municipios" />
+            <End Role="Paciente" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="SexoPaciente" Association="SantaFeModel.SexoPaciente">
+            <End Role="Sexo" EntitySet="Sexos" />
+            <End Role="Paciente" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="CargoEmpleado" Association="SantaFeModel.CargoEmpleado">
+            <End Role="Cargo" EntitySet="CargoSet" />
+            <End Role="Empleado" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="MedicoOrden" Association="SantaFeModel.MedicoOrden">
+            <End Role="Medico" EntitySet="Medicos" />
+            <End Role="Orden" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="PacienteOrden" Association="SantaFeModel.PacienteOrden">
+            <End Role="Paciente" EntitySet="Pacientes" />
+            <End Role="Orden" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="EmpleadoOrden" Association="SantaFeModel.EmpleadoOrden">
+            <End Role="Empleado" EntitySet="Empleados" />
+            <End Role="Orden" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="OrdenDetalleOrden" Association="SantaFeModel.OrdenDetalleOrden">
+            <End Role="Orden" EntitySet="Ordenes" />
+            <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriaExamen" Association="SantaFeModel.CategoriaExamen">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Examen" EntitySet="Examenes" />
+          </AssociationSet>
+          <AssociationSet Name="ExamenDetalleOrden" Association="SantaFeModel.ExamenDetalleOrden">
+            <End Role="Examen" EntitySet="Examenes" />
+            <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+          </AssociationSet>
+          <AssociationSet Name="ExamenExamenParametro" Association="SantaFeModel.ExamenExamenParametro">
+            <End Role="Examen" EntitySet="Examenes" />
+            <End Role="ExamenParametro" EntitySet="ExamenesParametros" />
+          </AssociationSet>
+          <AssociationSet Name="ParametroExamenParametro" Association="SantaFeModel.ParametroExamenParametro">
+            <End Role="Parametro" EntitySet="Parametros" />
+            <End Role="ExamenParametro" EntitySet="ExamenesParametros" />
+          </AssociationSet>
+          <AssociationSet Name="DetalleOrdenResultado" Association="SantaFeModel.DetalleOrdenResultado">
+            <End Role="DetalleOrden" EntitySet="DetallesOrdenes" />
+            <End Role="Resultado" EntitySet="Resultados" />
+          </AssociationSet>
+          <AssociationSet Name="ResultadoDetalleResultado" Association="SantaFeModel.ResultadoDetalleResultado">
+            <End Role="Resultado" EntitySet="Resultados" />
+            <End Role="DetalleResultado" EntitySet="DetallesResultados" />
+          </AssociationSet>
+          <AssociationSet Name="ParametroDetalleResultado" Association="SantaFeModel.ParametroDetalleResultado">
+            <End Role="Parametro" EntitySet="Parametros" />
+            <End Role="DetalleResultado" EntitySet="DetallesResultados" />
+          </AssociationSet>
+          <AssociationSet Name="OrdenDetalleFactura" Association="SantaFeModel.OrdenDetalleFactura">
+            <End Role="Orden" EntitySet="Ordenes" />
+            <End Role="DetalleFactura" EntitySet="DetallesFacturas" />
+          </AssociationSet>
+          <AssociationSet Name="FacturaDetalleFactura" Association="SantaFeModel.FacturaDetalleFactura">
+            <End Role="Factura" EntitySet="Facturas" />
+            <End Role="DetalleFactura" EntitySet="DetallesFacturas" />
+          </AssociationSet>
+          <AssociationSet Name="ReactivoParametro" Association="SantaFeModel.ReactivoParametro">
+            <End Role="Reactivo" EntitySet="Reactivos" />
+            <End Role="Parametro" EntitySet="Parametros" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_dpto" Type="String" Nullable="false" />
+          <NavigationProperty Name="Municipio" Relationship="SantaFeModel.DepartamentoMunicipio" FromRole="Departamento" ToRole="Municipio" />
+        </EntityType>
+        <EntityType Name="Municipio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_mun" Type="String" Nullable="false" />
+          <NavigationProperty Name="Departamento" Relationship="SantaFeModel.DepartamentoMunicipio" FromRole="Municipio" ToRole="Departamento" />
+          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="SantaFeModel.MunicipioPaciente" FromRole="Municipio" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_pac" Type="String" Nullable="false" />
+          <Property Name="Edad" Type="Int32" Nullable="false" />
+          <Property Name="Correo" Type="String" Nullable="true" />
+          <Property Name="Celular" Type="String" Nullable="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Municipio" Relationship="SantaFeModel.MunicipioPaciente" FromRole="Paciente" ToRole="Municipio" />
+          <Property Name="MunicipioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sexo" Relationship="SantaFeModel.SexoPaciente" FromRole="Paciente" ToRole="Sexo" />
+          <Property Name="SexoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="SantaFeModel.PacienteOrden" FromRole="Paciente" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Sexo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoSexo" Type="String" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="SantaFeModel.SexoPaciente" FromRole="Sexo" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" Nullable="false" />
+          <NavigationProperty Name="Examen" Relationship="SantaFeModel.CategoriaExamen" FromRole="Categoria" ToRole="Examen" />
+        </EntityType>
+        <EntityType Name="Examen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_exa" Type="String" Nullable="false" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="SantaFeModel.CategoriaExamen" FromRole="Examen" ToRole="Categoria" />
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DetalleOrden" Relationship="SantaFeModel.ExamenDetalleOrden" FromRole="Examen" ToRole="DetalleOrden" />
+          <NavigationProperty Name="ExamenParametro" Relationship="SantaFeModel.ExamenExamenParametro" FromRole="Examen" ToRole="ExamenParametro" />
+        </EntityType>
+        <EntityType Name="ExamenParametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Examen" Relationship="SantaFeModel.ExamenExamenParametro" FromRole="ExamenParametro" ToRole="Examen" />
+          <Property Name="ExamenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parametro" Relationship="SantaFeModel.ParametroExamenParametro" FromRole="ExamenParametro" ToRole="Parametro" />
+          <Property Name="ParametroId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleOrden">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad" Type="String" Nullable="false" />
+          <Property Name="FechaFinal" Type="String" Nullable="false" />
+          <Property Name="Precio" Type="Double" Nullable="true" />
+          <Property Name="Estado" Type="String" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="SantaFeModel.OrdenDetalleOrden" FromRole="DetalleOrden" ToRole="Orden" />
+          <Property Name="OrdenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Examen" Relationship="SantaFeModel.ExamenDetalleOrden" FromRole="DetalleOrden" ToRole="Examen" />
+          <Property Name="ExamenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Resultado" Relationship="SantaFeModel.DetalleOrdenResultado" FromRole="DetalleOrden" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cod_Orden" Type="String" Nullable="false" />
+          <Property Name="Fecha" Type="String" Nullable="false" />
+          <Property Name="Lugar" Type="String" Nullable="false" />
+          <NavigationProperty Name="Medico" Relationship="SantaFeModel.MedicoOrden" FromRole="Orden" ToRole="Medico" />
+          <Property Name="MedicoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="SantaFeModel.PacienteOrden" FromRole="Orden" ToRole="Paciente" />
+          <Property Name="PacienteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="SantaFeModel.EmpleadoOrden" FromRole="Orden" ToRole="Empleado" />
+          <Property Name="EmpleadoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DetalleOrden" Relationship="SantaFeModel.OrdenDetalleOrden" FromRole="Orden" ToRole="DetalleOrden" />
+          <NavigationProperty Name="DetalleFactura" Relationship="SantaFeModel.OrdenDetalleFactura" FromRole="Orden" ToRole="DetalleFactura" />
+          <Property Name="Estado" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreMed" Type="String" Nullable="false" />
+          <Property Name="Celular" Type="String" Nullable="true" />
+          <NavigationProperty Name="Orden" Relationship="SantaFeModel.MedicoOrden" FromRole="Medico" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="DetalleFactura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="true" />
+          <Property Name="PrecioUnitario" Type="Double" Nullable="false" />
+          <Property Name="Subtotal" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="SantaFeModel.OrdenDetalleFactura" FromRole="DetalleFactura" ToRole="Orden" />
+          <Property Name="OrdenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="SantaFeModel.FacturaDetalleFactura" FromRole="DetalleFactura" ToRole="Factura" />
+          <Property Name="FacturaId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom_Empleado" Type="String" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" />
+          <NavigationProperty Name="Cargo" Relationship="SantaFeModel.CargoEmpleado" FromRole="Empleado" ToRole="Cargo" />
+          <Property Name="CargoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="SantaFeModel.EmpleadoOrden" FromRole="Empleado" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaFac" Type="String" Nullable="false" />
+          <NavigationProperty Name="DetalleFactura" Relationship="SantaFeModel.FacturaDetalleFactura" FromRole="Factura" ToRole="DetalleFactura" />
+          <Property Name="CodFactura" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resultado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="true" />
+          <NavigationProperty Name="DetalleOrden" Relationship="SantaFeModel.DetalleOrdenResultado" FromRole="Resultado" ToRole="DetalleOrden" />
+          <Property Name="DetalleOrdenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DetalleResultado" Relationship="SantaFeModel.ResultadoDetalleResultado" FromRole="Resultado" ToRole="DetalleResultado" />
+        </EntityType>
+        <EntityType Name="DetalleResultado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamenResultado" Type="String" Nullable="false" />
+          <Property Name="Observacion" Type="String" Nullable="true" />
+          <NavigationProperty Name="Resultado" Relationship="SantaFeModel.ResultadoDetalleResultado" FromRole="DetalleResultado" ToRole="Resultado" />
+          <Property Name="ResultadoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parametro" Relationship="SantaFeModel.ParametroDetalleResultado" FromRole="DetalleResultado" ToRole="Parametro" />
+          <Property Name="ParametroId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom_Parametro" Type="String" Nullable="false" />
+          <NavigationProperty Name="ExamenParametro" Relationship="SantaFeModel.ParametroExamenParametro" FromRole="Parametro" ToRole="ExamenParametro" />
+          <NavigationProperty Name="DetalleResultado" Relationship="SantaFeModel.ParametroDetalleResultado" FromRole="Parametro" ToRole="DetalleResultado" />
+          <NavigationProperty Name="Reactivo" Relationship="SantaFeModel.ReactivoParametro" FromRole="Parametro" ToRole="Reactivo" />
+          <Property Name="ReactivoId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reactivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Maximo" Type="String" Nullable="true" />
+          <Property Name="Minimo" Type="String" Nullable="true" />
+          <Property Name="Densidad" Type="String" Nullable="true" />
+          <Property Name="ValoresNormales" Type="String" Nullable="true" />
+          <Property Name="Periodo" Type="String" Nullable="true" />
+          <NavigationProperty Name="Parametro" Relationship="SantaFeModel.ReactivoParametro" FromRole="Reactivo" ToRole="Parametro" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="SantaFeModel.CargoEmpleado" FromRole="Cargo" ToRole="Empleado" />
+        </EntityType>
+        <Association Name="DepartamentoMunicipio">
+          <End Type="SantaFeModel.Departamento" Role="Departamento" Multiplicity="1" />
+          <End Type="SantaFeModel.Municipio" Role="Municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Municipio">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MunicipioPaciente">
+          <End Type="SantaFeModel.Municipio" Role="Municipio" Multiplicity="1" />
+          <End Type="SantaFeModel.Paciente" Role="Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Municipio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="MunicipioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SexoPaciente">
+          <End Type="SantaFeModel.Sexo" Role="Sexo" Multiplicity="1" />
+          <End Type="SantaFeModel.Paciente" Role="Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sexo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="SexoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CargoEmpleado">
+          <End Type="SantaFeModel.Cargo" Role="Cargo" Multiplicity="1" />
+          <End Type="SantaFeModel.Empleado" Role="Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="CargoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicoOrden">
+          <End Type="SantaFeModel.Medico" Role="Medico" Multiplicity="1" />
+          <End Type="SantaFeModel.Orden" Role="Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="MedicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PacienteOrden">
+          <End Type="SantaFeModel.Paciente" Role="Paciente" Multiplicity="1" />
+          <End Type="SantaFeModel.Orden" Role="Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpleadoOrden">
+          <End Type="SantaFeModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="SantaFeModel.Orden" Role="Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="EmpleadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrdenDetalleOrden">
+          <End Type="SantaFeModel.Orden" Role="Orden" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleOrden" Role="DetalleOrden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleOrden">
+              <PropertyRef Name="OrdenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriaExamen">
+          <End Type="SantaFeModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="SantaFeModel.Examen" Role="Examen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Examen">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExamenDetalleOrden">
+          <End Type="SantaFeModel.Examen" Role="Examen" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleOrden" Role="DetalleOrden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Examen">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleOrden">
+              <PropertyRef Name="ExamenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExamenExamenParametro">
+          <End Type="SantaFeModel.Examen" Role="Examen" Multiplicity="1" />
+          <End Type="SantaFeModel.ExamenParametro" Role="ExamenParametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Examen">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExamenParametro">
+              <PropertyRef Name="ExamenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParametroExamenParametro">
+          <End Type="SantaFeModel.Parametro" Role="Parametro" Multiplicity="1" />
+          <End Type="SantaFeModel.ExamenParametro" Role="ExamenParametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExamenParametro">
+              <PropertyRef Name="ParametroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DetalleOrdenResultado">
+          <End Type="SantaFeModel.DetalleOrden" Role="DetalleOrden" Multiplicity="1" />
+          <End Type="SantaFeModel.Resultado" Role="Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetalleOrden">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="DetalleOrdenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ResultadoDetalleResultado">
+          <End Type="SantaFeModel.Resultado" Role="Resultado" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleResultado" Role="DetalleResultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resultado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleResultado">
+              <PropertyRef Name="ResultadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParametroDetalleResultado">
+          <End Type="SantaFeModel.Parametro" Role="Parametro" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleResultado" Role="DetalleResultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleResultado">
+              <PropertyRef Name="ParametroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrdenDetalleFactura">
+          <End Type="SantaFeModel.Orden" Role="Orden" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleFactura" Role="DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="OrdenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FacturaDetalleFactura">
+          <End Type="SantaFeModel.Factura" Role="Factura" Multiplicity="1" />
+          <End Type="SantaFeModel.DetalleFactura" Role="DetalleFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleFactura">
+              <PropertyRef Name="FacturaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReactivoParametro">
+          <End Type="SantaFeModel.Reactivo" Role="Reactivo" Multiplicity="1" />
+          <End Type="SantaFeModel.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reactivo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="ReactivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SantaFeModelStoreContainer" CdmEntityContainer="SantaFeModelContainer">
+    <EntitySetMapping Name="Departamentos">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Departamento)">
+        <MappingFragment StoreEntitySet="Departamentos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre_dpto" ColumnName="Nombre_dpto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Municipios">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Municipio)">
+        <MappingFragment StoreEntitySet="Municipios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre_mun" ColumnName="Nombre_mun" />
+          <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pacientes">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Paciente)">
+        <MappingFragment StoreEntitySet="Pacientes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre_pac" ColumnName="Nombre_pac" />
+          <ScalarProperty Name="Edad" ColumnName="Edad" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="MunicipioId" ColumnName="MunicipioId" />
+          <ScalarProperty Name="SexoId" ColumnName="SexoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sexos">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Sexo)">
+        <MappingFragment StoreEntitySet="Sexos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TipoSexo" ColumnName="TipoSexo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Categoria)">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Examenes">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Examen)">
+        <MappingFragment StoreEntitySet="Examenes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre_exa" ColumnName="Nombre_exa" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExamenesParametros">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.ExamenParametro)">
+        <MappingFragment StoreEntitySet="ExamenesParametros">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ExamenId" ColumnName="ExamenId" />
+          <ScalarProperty Name="ParametroId" ColumnName="ParametroId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesOrdenes">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.DetalleOrden)">
+        <MappingFragment StoreEntitySet="DetallesOrdenes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="OrdenId" ColumnName="OrdenId" />
+          <ScalarProperty Name="ExamenId" ColumnName="ExamenId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ordenes">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Orden)">
+        <MappingFragment StoreEntitySet="Ordenes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cod_Orden" ColumnName="Cod_Orden" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Lugar" ColumnName="Lugar" />
+          <ScalarProperty Name="MedicoId" ColumnName="MedicoId" />
+          <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+          <ScalarProperty Name="EmpleadoId" ColumnName="EmpleadoId" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicos">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Medico)">
+        <MappingFragment StoreEntitySet="Medicos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NombreMed" ColumnName="NombreMed" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesFacturas">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.DetalleFactura)">
+        <MappingFragment StoreEntitySet="DetallesFacturas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+          <ScalarProperty Name="OrdenId" ColumnName="OrdenId" />
+          <ScalarProperty Name="FacturaId" ColumnName="FacturaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empleados">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Empleado)">
+        <MappingFragment StoreEntitySet="Empleados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom_Empleado" ColumnName="Nom_Empleado" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="CargoId" ColumnName="CargoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facturas">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Factura)">
+        <MappingFragment StoreEntitySet="Facturas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FechaFac" ColumnName="FechaFac" />
+          <ScalarProperty Name="CodFactura" ColumnName="CodFactura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resultados">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Resultado)">
+        <MappingFragment StoreEntitySet="Resultados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="DetalleOrdenId" ColumnName="DetalleOrdenId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesResultados">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.DetalleResultado)">
+        <MappingFragment StoreEntitySet="DetallesResultados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ExamenResultado" ColumnName="ExamenResultado" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+          <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
+          <ScalarProperty Name="ParametroId" ColumnName="ParametroId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametros">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Parametro)">
+        <MappingFragment StoreEntitySet="Parametros">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom_Parametro" ColumnName="Nom_Parametro" />
+          <ScalarProperty Name="ReactivoId" ColumnName="ReactivoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reactivos">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Reactivo)">
+        <MappingFragment StoreEntitySet="Reactivos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+          <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+          <ScalarProperty Name="Densidad" ColumnName="Densidad" />
+          <ScalarProperty Name="ValoresNormales" ColumnName="ValoresNormales" />
+          <ScalarProperty Name="Periodo" ColumnName="Periodo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CargoSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SantaFeModel.Cargo)">
+        <MappingFragment StoreEntitySet="CargoSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

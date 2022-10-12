@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- icons -->
+    @Styles.Render("~/Admin/light/fonts/simple-line-icons/simple-line-icons.min.css")
+    @Styles.Render("~/Admin/light/fonts/font-awesome/css/font-awesome.min.css")
+    @Styles.Render("~/Admin/light/fonts/font-awesome/v6/css/all.css")
+    @Styles.Render("~/Admin/light/fonts/material-design-icons/material-icon.css")
+    <!--bootstrap -->
+    @Styles.Render("~/Admin/assets/bundles/bootstrap/css/bootstrap.min.css")
+    <!-- Material Design Lite CSS -->
+    @Styles.Render("~/Admin/assets/bundles/material/material.min.css")
+    @Styles.Render("~/Admin/assets/bundles/material/material.min.css")
+    @Styles.Render("~/Admin/light/css/material_style.css")
+    <!-- Theme Styles -->
+    @Styles.Render("~/Admin/light/css/theme_style.css")
+    @Styles.Render("~/Admin/light/css/plugins.min.css")
+    @Styles.Render("~/Admin/light/css/style.css")
+    @Styles.Render("~/Admin/light/css/responsive.css")
+    @Styles.Render("~/Admin/light/css/theme-color.css")
+    @Styles.Render("~/Principal/assets/css/animate.css")
+
+    <!-- REQUIRED SCRIPTS -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Admin/assets/bundles/jquery/jquery.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/popper/popper.js")
+    @Scripts.Render("~/Admin/assets/bundles/jquery-blockUI/jquery.blockui.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/jquery.slimscroll/jquery.slimscroll.js")
+    @Scripts.Render("~/Admin/assets/bundles/feather/feather.min.js")
+    <!-- bootstrap -->
+    @Scripts.Render("~/Admin/assets/bundles/bootstrap/js/bootstrap.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/bootstrap-switch/js/bootstrap-switch.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/flatpicker/js/flatpicker.min.js")
+    @Scripts.Render("~/Admin/assets/data/date-time.init.js")
+    <!-- counterup -->
+    @Scripts.Render("~/Admin/assets/bundles/counterup/jquery.waypoints.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/counterup/jquery.counterup.min.js")
+    <!-- Common js-->
+    @Scripts.Render("~/Admin/assets/app.js")
+    @Scripts.Render("~/Admin/assets/layout.js")
+    @Scripts.Render("~/Admin/assets/theme-color.js")
+    <!-- material -->
+    @Scripts.Render("~/Admin/assets/bundles/material/material.min.js")
+    <!-- chart js -->
+    @Scripts.Render("~/Admin/assets/bundles/chart-js/Chart.min.js")
+    @Scripts.Render("~/Admin/assets/bundles/chart-js/utils.js")
+    @Scripts.Render("~/Admin/assets/bundles/apexcharts/apexcharts.min.js")
+    @Scripts.Render("~/Admin/assets/data/apex-home.js")
+    @RenderSection("scripts", required: false)
+
+</head>
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white white-sidebar-color logo-indigo">
+
+    <div>
+        @*<div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>*@
+    </div>
+    @Html.Partial("_Navbar")
+<div class="page-container">
+    @Html.Partial("_Sidebar")
+    <div class="page-content-wrapper" style="background-color: #eaeef3">
+        <div class="page-content">
+            <br />
+            <br />
+            @RenderBody()
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

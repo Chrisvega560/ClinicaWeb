@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Factura>
+
+@{
+    ViewBag.Title = "Facturas";
+    ViewBag.R6 = "active";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+}
+
+<h2>Facturas</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 animated bounceInDown default-stripe">
+            <!-- Widget: user widget style 2 -->
+            <div class="card card-widget widget-user-2 shadow-sm">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header" style="background-color: steelblue">
+                    <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src="@Url.Content("~/adminlte/dist/img/SantaFe.png")" alt="User Avatar">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username" style="color:#fff">@Html.DisplayFor(modelItem => item.DetalleFactura.FirstOrDefault().Orden.Paciente.Nombre_pac)</h3>
+                </div>
+                <div class="card-footer p-0">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                Codigo de factura<span class="float-right badge bg-primary">@Html.DisplayFor(modelItem => item.CodFactura)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                Fecha de Factura<span class="float-right badge bg-danger">@Html.DisplayFor(modelItem => item.FechaFac)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                N° Articulos <span class="float-right badge bg-info">@String.Format(item.DetalleFactura.Sum(x => x.Cantidad).ToString())</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Details", "Facturas", new { id = item.Id })" class="nav-link btn btn-block btn-primary">
+                                Ver Facturas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    }
+</div>
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFac)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFac)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

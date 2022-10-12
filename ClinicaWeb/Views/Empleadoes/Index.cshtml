@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ClinicaWeb.Models.Empleado>
+
+@{
+    ViewBag.Title = "Lista de Empleados";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A6 = "active";
+}
+
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Lista Empleados</h2>
+    </div>
+    <div class="col-md-2">
+        <a href="Javascript:window.print()" class="btn btn-primary"> <i class="fa fa-print"></i> Imprimir Listado</a>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
+    <tr>
+        <th>
+            Nombre del Empleado
+        </th>
+        <th>
+           Correo Electronico
+        </th>
+        <th>
+            Cargo
+        </th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom_Empleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cargo.Descripcion)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","empleadoes",new { id = item.Id })" class="btn btn-info" title="Editar Empleado"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","empleadoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Empleado"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<a href="@Url.Action("Create","empleadoes")" class="btn btn-success"><i class="fa fa-plus"></i> Crear Nuevo Empleado</a>

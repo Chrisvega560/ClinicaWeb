@@ -1,0 +1,276 @@
+﻿@using ClinicaWeb.Models
+@model IEnumerable<ClinicaWeb.Models.Examen>
+
+@{
+    ViewBag.Title = "Index";
+
+    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
+    {
+        Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.R4 = "active";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewBag.P2 = "active";
+    }
+}
+@if (User.IsInRole("Recepcionista"))
+{
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item" style="margin-right:10px">Buscar examen por nombre</li>
+                <form action="@Url.Action("ExamenSearch", "Examen")" method="get" class="navbar-form navbar-right" role="search">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" id="value" name="valor" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+}
+else
+{
+    <div class="page-bar" style="margin:10px 0px">
+        <div class="page-title-breadcrumb">
+            <div class=" pull-left">
+                <div class="page-title">Examenes</div>
+            </div>
+            <ol class="breadcrumb page-breadcrumb pull-right">
+                <form class="search-form-opened navbar-form navbar-right" action="@Url.Action("ExamenSearch", "Examen")" method="GET" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search..." name="valor">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default navbar-right">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </ol>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="row mb-3">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        Categorias
+                    </div>
+                    <div id="cont" class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12">
+                <div class="d-grip gap-2">
+                    <button type="button" id="filter" class="btn btn-outline-dark btn-block">
+                        <i class="fas fa-filter"></i>Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Examenes</h3>
+            </div>
+            <div id="_tabla" class="col-md-12">
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+
+                function add(idexamen)
+                {
+
+                    var cant = 1;
+                    $('#' + idexamen).text('Agregado ✔');
+                    $.ajax({
+                                type: 'POST',
+                                url: "@Url.Action("agregar", "Examen", new { id=0 })" + "?idexamen=" + idexamen + "&cant=" + cant,
+                                content: "application/json; charset=utf-8",
+                                dataType: "json",
+                                data: JSON.stringify({ idexamen, cant}),
+                                success: function (result) {
+                                    if (result.success == true)
+                                        Swal.fire(
+                                            'Buen trabajo!',
+                                            'Examen añadido a tu lista exitosamente!',
+                                            'success'
+                                        )
+                                    else
+                                        Swal.fire(
+                                            'Buen trabajo!',
+                                            'Examen añadido a tu lista exitosamente!',
+                                            'success'
+                                        );
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Ocurrio un error, revisa nuevamente!',
+                                    });
+                                }
+                    });
+                    $('#' + idexamen).attr('disabled', 'disabled');
+                }
+</script>
+<script type="text/javascript">
+        $(document).ready(function () {
+                    categorias();
+                    Examenes(0);
+
+                });
+
+                $("#filter").click(function () {
+                    var idcategoria = $("input[name=categoria]:checked").val()
+                    Examenes(idcategoria);
+                })
+
+
+
+                function categorias() {
+                    $.ajax({
+                        url: "@Url.Action("Categories", "Examen")",
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (response) {
+                            /*var x = JSON.parse(JSON.stringify(data));*/
+
+
+                            $("<div>").addClass("form-check").append(
+                                $("<input>").addClass("form-check-input custom-control-input custom-control-input-danger custom-control-input-outline").attr({ "type": "radio", "name": "categoria", "value": "0", "id": "cx", "checked": "checked" }),
+                                $("<label>").addClass("form-check-label custom-control-label").text("Todos").attr({ "for": "cx" })
+                            ).appendTo("#cont")
+
+                            //for (i = 0; i < x.data.length; i++) {
+
+                            //        $("<div>").addClass("form-check").append(
+                            //            $("<input>").addClass("form-check-input").attr({ "type": "radio", "name": "categoria", "value": x.data[i].id, "id": "c" + i }),
+                            //            $("<label>").addClass("form-check-label").text(x.data[i].tipo).attr({ "for": "c" + i })
+                            //        ).appendTo("#cont")
+                            //    }
+
+
+                            $.each(response.data, function (i, element) {
+                                $("<div>").addClass("form-check").append(
+                                    $("<input>").addClass("form-check-input custom-control-input custom-control-input-danger custom-control-input-outline").attr({ "type": "radio", "name": "categoria", "value": element.id, "id": "c" + i }),
+                                    $("<label>").addClass("form-check-label custom-control-label").text(element.tipo).attr({ "for": "c" + i })
+                                ).appendTo("#cont")
+
+
+
+                            });
+                        }
+                    });
+
+                }
+
+
+
+                function Examenes(idcategoria) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ExamenCategoria", "Examen", new { id = 0 })" + "?idcategoria=" + idcategoria,
+                        content: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify({ idcategoria}),
+                        success: function (result) {
+                        var data = JSON.parse(JSON.stringify(result));
+
+                            var tabla = "<table class='table table-striped table-valign-middle'> <thead> <tr><th> Nombre del Examen</th> <th>Precio</th> <th>Categoria</th> <th>Opciones</th>  </tr> </thead>  <tbody>"
+
+                        for (i = 0; i < data.result.length; i++) {
+
+                            tabla += "<tr>";
+                            tabla += "<td>";
+                            tabla += data.result[i].Nombre;
+                            tabla += "</td>";
+
+                            tabla += "<td>";
+                            tabla += "C$ " + data.result[i].precio;
+                            tabla += "</td>";
+
+                            tabla += "<td>";
+                            tabla += data.result[i].categoria;
+                            tabla += "</td>";
+
+                            tabla += "<td>";
+                            tabla += "<button type='button' id=" +data.result[i].id +" class='btn btn-primary' onclick='add("+ data.result[i].id +")'>Añadir</button>";
+                            tabla += "</td>";
+
+                            tabla += "</tr>";
+                        }
+
+                        tabla += "</tbody></table>"
+
+
+                        $("#_tabla").empty();
+                        $("#_tabla").append(tabla);
+                        }
+                    });
+                }
+</script>
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_exa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria.Tipo)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_exa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Tipo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@
