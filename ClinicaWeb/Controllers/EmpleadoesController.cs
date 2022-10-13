@@ -9,9 +9,6 @@ using System.Web.Mvc;
 using ClinicaWeb.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using System.IO;
 
 namespace ClinicaWeb.Controllers
 {
@@ -26,48 +23,6 @@ namespace ClinicaWeb.Controllers
         {
             var empleados = db.Empleados.Include(e => e.Cargo);
             return View(empleados.ToList());
-        }
-
-        public ActionResult DescargarReporteEmpleado()
-        {
-            try
-            {
-                var rptH = new ReportClass();
-                rptH.FileName = Server.MapPath("/Reports/Lista_Empleados.rpt");
-                rptH.Load();
-
-                // Report connection
-                var connInfo = CrystalReportsCnn.GetConnectionInfo();
-                TableLogOnInfo logonInfo = new TableLogOnInfo();
-                Tables tables;
-                tables = rptH.Database.Tables;
-                foreach (Table table in tables)
-                {
-                    logonInfo = table.LogOnInfo;
-                    logonInfo.ConnectionInfo = connInfo;
-                    table.ApplyLogOnInfo(logonInfo);
-                }
-                Response.Buffer = false;
-                Response.ClearContent();
-                Response.ClearHeaders();
-
-                Stream stream = rptH.ExportToStream(ExportFormatType.PortableDocFormat);
-                rptH.Dispose();
-                rptH.Close();
-                return new FileStreamResult(stream, "application/pdf");
-
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        [AllowAnonymous]
-        public ActionResult Print()
-        {
-            var empleados = db.Empleados.Include(e => e.Cargo);
-            return new Rotativa.ActionAsPdf("Index", empleados) { FileName = "Lista_Empleados.pdf" };
         }
 
         // GET: Empleadoes/Details/5
