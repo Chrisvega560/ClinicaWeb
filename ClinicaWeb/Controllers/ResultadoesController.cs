@@ -24,6 +24,7 @@ namespace ClinicaWeb.Controllers
             var resultados = db.Resultados.Include(r => r.DetalleOrden);
             return View(resultados.ToList());
         }
+        [AllowAnonymous]
         public ActionResult DescargarResult(int id, int categoria)
         {
             try
