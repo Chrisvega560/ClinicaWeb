@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ClinicaWeb.Models;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -23,6 +26,40 @@ namespace ClinicaWeb.Controllers
         {
             var empleados = db.Empleados.Include(e => e.Cargo);
             return View(empleados.ToList());
+        }
+        public ActionResult DescargarReportEmpleados()
+        {
+            try
+            {
+                var rptH = new ReportClass();
+                rptH.FileName = Server.MapPath("/Reports/Lista_Empleados.rpt");
+                rptH.Load();
+
+                // Report connection
+                var connInfo = CrystalReportsCnn.GetConnectionInfo();
+                TableLogOnInfo logonInfo = new TableLogOnInfo();
+                Tables tables;
+                tables = rptH.Database.Tables;
+                foreach (Table table in tables)
+                {
+                    logonInfo = table.LogOnInfo;
+                    logonInfo.ConnectionInfo = connInfo;
+                    table.ApplyLogOnInfo(logonInfo);
+                }
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+                Stream stream = rptH.ExportToStream(ExportFormatType.PortableDocFormat);
+                rptH.Dispose();
+                rptH.Close();
+                return new FileStreamResult(stream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // GET: Empleadoes/Details/5

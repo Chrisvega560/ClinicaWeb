@@ -12,7 +12,7 @@
         <h2>Lista Empleados</h2>
     </div>
     <div class="col-md-2">
-        <a href="Javascript:window.print()" class="btn btn-primary"> <i class="fa fa-print"></i> Imprimir Listado</a>
+        <button class="btn btn-primary" onclick="download()" type="submit"><i class="fa fa-print"></i> Imprimir  Listado</button>
     </div>
 </div>
 <br />
@@ -52,3 +52,9 @@
 </table>
 
 <a href="@Url.Action("Create","empleadoes")" class="btn btn-success"><i class="fa fa-plus"></i> Crear Nuevo Empleado</a>
+
+<script type="text/javascript">
+    function download() {
+        window.open("/Empleadoes/DescargarReportEmpleados/");
+    }
+</script>

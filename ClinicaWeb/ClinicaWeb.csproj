@@ -278,6 +278,30 @@
       <DependentUpon>FactReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Lista_Empleados.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lista_Empleados.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Lista_Pacientes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lista_Pacientes.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\List_Examen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>List_Examen.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\List_Medico.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>List_Medico.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\ResultReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -322,6 +346,10 @@
     <Content Include="adminlte\dist\img\credit\paypal2.png" />
     <Content Include="adminlte\dist\img\credit\visa.png" />
     <Content Include="adminlte\dist\img\default-150x150.png" />
+    <Content Include="adminlte\dist\img\icon-emp.jfif" />
+    <Content Include="adminlte\dist\img\icon-exa.jpg" />
+    <Content Include="adminlte\dist\img\icon-med.jfif" />
+    <Content Include="adminlte\dist\img\icon-pac.jfif" />
     <Content Include="adminlte\dist\img\icons.png" />
     <Content Include="adminlte\dist\img\img-1.png" />
     <Content Include="adminlte\dist\img\img-2.png" />
@@ -3607,6 +3635,22 @@
     <EmbeddedResource Include="Reports\FactReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FactReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Lista_Empleados.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Lista_Empleados.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Lista_Pacientes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Lista_Pacientes.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\List_Examen.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>List_Examen.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\List_Medico.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>List_Medico.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ResultReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

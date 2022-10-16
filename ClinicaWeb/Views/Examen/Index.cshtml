@@ -16,7 +16,7 @@
         ViewBag.P2 = "active";
     }
 }
-@if (User.IsInRole("Recepcionista"))
+@if (User.IsInRole("Recepcionista") || User.IsInRole("Admin"))
 {
     <div class="row mb-2">
         <div class="col-sm-6">
@@ -81,8 +81,18 @@ else
                     <button type="button" id="filter" class="btn btn-outline-dark btn-block">
                         <i class="fas fa-filter"></i>Aplicar Filtros
                     </button>
+
+                    <br />
+                    @if (User.IsInRole("Recepcionista") || User.IsInRole("Admin"))
+                    {
+                        <button class="btn btn-primary btn-block" onclick="download()" type="submit"><i class="fa fa-print"></i> Imprimir  Lista de examenes</button>
+                    }
                 </div>
+
+
+
             </div>
+
         </div>
     </div>
     <div class="col-sm-9">
@@ -97,6 +107,12 @@ else
     </div>
 
 </div>
+<script type="text/javascript">
+    function download() {
+        window.open("/Examen/DescargarReportExamen/");
+    }
+</script>
+
 
 
 
