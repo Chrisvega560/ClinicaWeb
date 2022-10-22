@@ -3,22 +3,26 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A2AA = "active";
+    ViewBag.A02 = "menu-open";
+    ViewBag.A2 = "active";
 }
 
-<h2>Index</h2>
+<h2>Parametros</h2>
+<br />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-success" href="@Url.Action("create","parametroes")"><i class="fa fa-plus"></i> Agregar Nuevo Examen</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nom_Parametro)
+            <label>Nombre de los Parametros</label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Reactivo.Maximo)
+            <label>Maximo</label>
         </th>
-        <th></th>
+        <th> Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -30,9 +34,8 @@
             @Html.DisplayFor(modelItem => item.Reactivo.Maximo)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="@Url.Action("Edit","parametroes",new { id = item.Id })" class="btn btn-info" title="Editar Parametro"><i class="fa fa-edit"></i></a> |
+            <a href="@Url.Action("Delete","parametroes",new { id = item.Id })" class="btn btn-danger" title="Eliminar parametro"><i class="fa fa-trash"></i></a>
         </td>
     </tr>
 }

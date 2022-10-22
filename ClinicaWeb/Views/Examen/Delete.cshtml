@@ -1,48 +1,62 @@
 ﻿@model ClinicaWeb.Models.Examen
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Examen";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A2 = "active";
+    ViewBag.A02 = "menu-open";
+    ViewBag.A2A = "active";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Examen</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre_exa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre_exa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria.Tipo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Categoria.Tipo)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-exclamation-triangle"></i>
+            Eliminar Examen
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+            Usted esta a punto de borrar información importante!
         </div>
-    }
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Nombre del examen</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre_exa)
+            </dd>
+
+            <dt>
+                <label>Precio</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Precio)
+            </dd>
+
+            <dt>
+                <label>Categoria</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Categoria.Tipo)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminar Definitivamente" class="btn btn-success" />
+        <a href="@Url.Action("Index","examen")" class="btn btn-danger">Cancelar</a>
+    </div>
+        }
+    </div>
 </div>

@@ -3,13 +3,15 @@
 @{
     ViewBag.Title = "Lista de Cargos";
     Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A11 = "active";
 }
-
-<h2>Cargos</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Lista Cargos</h2>
+    </div>
+</div>
+<br />
 <table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
@@ -18,17 +20,19 @@
         <th>Opciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","cargoes",new { id = item.Id })" class="btn btn-info" title="Editar Cargo"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","cargoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Cargo"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<a href="@Url.Action("Create","cargoes")" class="btn btn-success"><i class="fa fa-plus"></i> Ingresar Nuevo Cargo</a>

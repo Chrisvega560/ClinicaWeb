@@ -6,6 +6,9 @@
     if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
     {
         ViewBag.R5 = "active";
+        ViewBag.list = "active";
+        ViewBag.A2 = "active";
+        ViewBag.A02 = "menu-open";
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
         int cont = ViewBag.cart;
 

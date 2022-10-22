@@ -29,13 +29,21 @@ namespace ClinicaWeb.Controllers
             try
             {
                 var rptH = new ReportClass();
-                if (categoria == 7)
+                if (categoria == 7 || categoria == 3 || categoria == 4 || categoria == 8)
                 {
                     rptH.FileName = Server.MapPath("/Reports/SecondReport.rpt");
                 }
                 else if (categoria == 5)
                 {
                     rptH.FileName = Server.MapPath("/Reports/ResultReport.rpt");
+                }
+                else if (categoria == 6)
+                {
+                    rptH.FileName = Server.MapPath("/Reports/Hematologia.rpt");
+                }
+                else if (categoria == 1)
+                {
+                    rptH.FileName = Server.MapPath("/Reports/Uroanalisis.rpt");
                 }
                 rptH.Load();
 

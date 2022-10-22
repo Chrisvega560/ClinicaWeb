@@ -1,15 +1,21 @@
 ﻿@model IEnumerable<ClinicaWeb.Models.ExamenParametro>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A2AAAA = "active";
+    ViewBag.A02 = "menu-open";
+    ViewBag.A2 = "active";
 }
 
-<h2>Index</h2>
+<h2>Examenes - Parametros</h2>
+
+<br />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-success" href="@Url.Action("create","examenparametroes")"><i class="fa fa-plus"></i> Agregar Nuevo Examen</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Examen.Nombre_exa)
@@ -20,20 +26,20 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Parametro.Nom_Parametro)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Parametro.Nom_Parametro)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","ExamenParametroes",new { id = item.Id })" class="btn btn-info" title="Editar Examen - Parametro"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","ExamenParametroes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Examen - Parametro"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

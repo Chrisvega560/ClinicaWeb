@@ -8,6 +8,9 @@
     {
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
         ViewBag.R4 = "active";
+        ViewBag.A2A = "active";
+        ViewBag.A02 = "menu-open";
+        ViewBag.A2 = "active";
 
     }
     else
@@ -88,7 +91,9 @@
                             C$ @Html.DisplayFor(modelItem => item.Precio)
                         </td>
                         <td>
-                            <button type='button' id="@item.Id.ToString()" class='btn btn-primary' onclick="add(@item.Id.ToString())">Añadir</button>
+                            <button type='button' id="@item.Id.ToString()" class='btn btn-primary' title="Añadir a la Lista" onclick="add(@item.Id.ToString())"><i class="fa fa-cart-plus"></i></button> |
+                            <a href="@Url.Action("Edit","examen",new { id = item.Id })" class="btn btn-info" title="Editar Examen"><i class="fa fa-edit"></i></a> |
+                            <a href="@Url.Action("Delete","examen",new { id = item.Id })" class="btn btn-danger" title="Eliminar Examen"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 }

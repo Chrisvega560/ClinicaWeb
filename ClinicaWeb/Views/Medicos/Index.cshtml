@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutSis.cshtml";
     ViewBag.R8 = "active";
+    ViewBag.A7 = "active";
 }
 
 <br />
@@ -19,10 +20,10 @@
 <table  class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NombreMed)
+            Nombre de los Médicos
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Celular)
+            Números de Celulares
         </th>
         <th></th>
     </tr>
@@ -44,6 +45,7 @@
     }
 
 </table>
+<a href="@Url.Action("Create","medicos")" class="btn btn-success"><i class="fa fa-plus"></i> Ingresar Nuevo Medico</a>
 
 <script type="text/javascript">
     function download() {

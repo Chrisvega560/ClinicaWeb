@@ -1,17 +1,14 @@
 ﻿@model IEnumerable<ClinicaWeb.Models.Categoria>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Categorias";
     ViewBag.M2 = "active";
 
     if(User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.A5 = "active";
 
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 

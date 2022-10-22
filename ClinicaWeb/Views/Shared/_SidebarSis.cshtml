@@ -68,7 +68,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item menu-closed">
+                        <li class="nav-item @ViewBag.A02">
                             <a href="#" class="nav-link @ViewBag.A2">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
@@ -81,6 +81,12 @@
                                     <a href=@Url.Action("Index", "Examen") class="nav-link  @ViewBag.A2A">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Examen</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("ListaExamenes", "Examen") class="nav-link  @ViewBag.list">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Mi Lista de Examenes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -101,9 +107,10 @@
                                         <p>Examen Parametro</p>
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
-                        <li class="nav-item menu-closed">
+                        <li class="nav-item @ViewBag.A03">
                             <a href="#" class="nav-link @ViewBag.A3">
                                 <i class="nav-icon fa-solid fa-square-poll-vertical"></i>
                                 <p>
@@ -126,7 +133,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item menu-closed">
+                        <li class="nav-item @ViewBag.A04">
                             <a href="#" class="nav-link @ViewBag.A4">
                                 <i class="nav-icon fas fa-calculator"></i>
                                 <p>
@@ -189,7 +196,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item menu-closed">
+                        <li class="nav-item @ViewBag.A09">
                             <a href="#" class="nav-link @ViewBag.A9">
                                 <i class="nav-icon fas fa-location-dot"></i>
                                 <p>

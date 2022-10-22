@@ -1,18 +1,22 @@
 ﻿@model ClinicaWeb.Models.Reactivo
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Información";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A02 = "menu-open";
+    ViewBag.A2 = "active";
+    ViewBag.A2AAA = "active";
 }
 
-<h2>Edit</h2>
+
+<h3>Editar Informacion de los Reactivos</h3>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Reactivo</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -59,15 +63,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Aceptar" class="btn btn-success" />
+                <a href="@Url.Action("Index","reactivoes")" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

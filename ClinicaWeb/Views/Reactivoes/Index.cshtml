@@ -1,15 +1,21 @@
 ﻿@model IEnumerable<ClinicaWeb.Models.Reactivo>
 
 @{
-    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.Title = "Lista de reactivos";
+    ViewBag.A02 = "menu-open";
+    ViewBag.A2 = "active";
+    ViewBag.A2AAA = "active";
 }
 
-<h2>Index</h2>
+<h2>Reactivos</h2>
+
+<br />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-success" href="@Url.Action("create","reactivoes")"><i class="fa fa-plus"></i> Agregar Nuevo Examen</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Maximo)
@@ -26,33 +32,32 @@
         <th>
             @Html.DisplayNameFor(model => model.Periodo)
         </th>
-        <th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Maximo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Minimo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Densidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ValoresNormales)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Periodo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maximo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Minimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Densidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValoresNormales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodo)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","reactivoes",new { id = item.Id })" class="btn btn-info" title="Editar Reactivo"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","reactivoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Reactivo"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

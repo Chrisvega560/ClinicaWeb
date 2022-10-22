@@ -1,10 +1,15 @@
 ﻿@model ClinicaWeb.Models.Examen
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Añadir Examen";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A2 = "active";
+    ViewBag.A02 = "menu-open";
+    ViewBag.R4 = "active";
+    ViewBag.A2A = "active";
 }
 
-<h2>Create</h2>
+<h3>Añadir Información de examenes</h3>
 
 
 @using (Html.BeginForm()) 
@@ -12,11 +17,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Examen</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Nombre_exa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label>Nombre del Examen</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Nombre_exa, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Nombre_exa, "", new { @class = "text-danger" })
@@ -24,7 +28,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label>Precio del Examen</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
@@ -32,7 +36,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoriaId, "CategoriaId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label>Categoria</label>
             <div class="col-md-10">
                 @Html.DropDownList("CategoriaId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
@@ -41,16 +45,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Aceptar" class="btn btn-success" />
+                <a href="@Url.Action("Index","examen")" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

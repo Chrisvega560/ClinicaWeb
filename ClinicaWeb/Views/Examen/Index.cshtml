@@ -7,7 +7,10 @@
     if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
     {
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.A2 = "active";
+        ViewBag.A02 = "menu-open";
         ViewBag.R4 = "active";
+        ViewBag.A2A = "active";
 
     }
     else
@@ -86,6 +89,7 @@ else
                     @if (User.IsInRole("Recepcionista") || User.IsInRole("Admin"))
                     {
                         <button class="btn btn-primary btn-block" onclick="download()" type="submit"><i class="fa fa-print"></i> Imprimir  Lista de examenes</button>
+                        <a class="btn btn-success btn-block" href="@Url.Action("create","examen")"><i class="fa fa-plus"></i> Agregar Nuevo Examen</a>
                     }
                 </div>
 
@@ -233,9 +237,9 @@ else
                             tabla += "<td>";
                             tabla += data.result[i].categoria;
                             tabla += "</td>";
-
+              
                             tabla += "<td>";
-                            tabla += "<button type='button' id=" +data.result[i].id +" class='btn btn-primary' onclick='add("+ data.result[i].id +")'>Añadir</button>";
+                            tabla += "<button type='button' id=" + data.result[i].id + " class='btn btn-primary' onclick='add(" + data.result[i].id + ")'>Añadir</button>";
                             tabla += "</td>";
 
                             tabla += "</tr>";
