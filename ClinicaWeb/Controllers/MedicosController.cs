@@ -21,6 +21,7 @@ namespace ClinicaWeb.Controllers
         // GET: Medicos
         public ActionResult Index()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             return View(db.Medicos.ToList());
         }
 
@@ -77,6 +78,7 @@ namespace ClinicaWeb.Controllers
         // GET: Medicos/Create
         public ActionResult Create()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             return View();
         }
 
@@ -100,6 +102,7 @@ namespace ClinicaWeb.Controllers
         // GET: Medicos/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -131,6 +134,7 @@ namespace ClinicaWeb.Controllers
         // GET: Medicos/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

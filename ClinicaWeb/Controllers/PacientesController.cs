@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClinicaWeb.Controllers
 {
-    [Authorize(Roles = "Admin,Recepcionista")]
+    [Authorize]
     public class PacientesController : Controller
     {
         private SantaFeModelContainer db = new SantaFeModelContainer();
@@ -24,6 +24,7 @@ namespace ClinicaWeb.Controllers
         // GET: Pacientes
         public ActionResult Index()
         {
+            //ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             var pacientes = db.Pacientes.Include(p => p.Municipio).Include(p => p.Sexo);
             return View(pacientes.ToList());
         }
@@ -80,6 +81,7 @@ namespace ClinicaWeb.Controllers
         // GET: Pacientes/Create
         public ActionResult Create()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
             ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
             return View();
@@ -120,6 +122,7 @@ namespace ClinicaWeb.Controllers
         // GET: Pacientes/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -155,6 +158,7 @@ namespace ClinicaWeb.Controllers
         // GET: Pacientes/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

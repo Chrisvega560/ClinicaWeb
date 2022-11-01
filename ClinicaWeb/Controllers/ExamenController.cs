@@ -26,8 +26,18 @@ namespace ClinicaWeb.Controllers
         // GET: Examen
         public ActionResult Index()
         {
-            var examenes = db.Examenes.Include(e => e.Categoria);
-            return View(examenes.ToList());
+            if(User.IsInRole("Paciente"))
+            {
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                var examenes = db.Examenes.Include(e => e.Categoria);
+                return View(examenes.ToList());
+            }
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                var examenes = db.Examenes.Include(e => e.Categoria);
+                return View(examenes.ToList());
+            }   
         }
 
         public ActionResult DescargarReportExamen()
@@ -92,7 +102,10 @@ namespace ClinicaWeb.Controllers
         }
         public ActionResult ExamenSearch(string valor)
         {
-            List<Examen> result = new List<Examen>();
+            if(User.IsInRole("Paciente"))
+            {
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                List<Examen> result = new List<Examen>();
 
                 valor = valor.Trim();
                 ViewBag.titulo = " | Resultados para " + valor;
@@ -101,7 +114,22 @@ namespace ClinicaWeb.Controllers
                     result = db.Examenes.Where(x => x.Nombre_exa == valor).ToList();
                 }
                 result = db.Examenes.Where(x => x.Nombre_exa.Contains(valor)).ToList();
-            return View(result);
+                return View(result);
+            }
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                List<Examen> result = new List<Examen>();
+
+                valor = valor.Trim();
+                ViewBag.titulo = " | Resultados para " + valor;
+                if (Regex.IsMatch(valor, Upattern))
+                {
+                    result = db.Examenes.Where(x => x.Nombre_exa == valor).ToList();
+                }
+                result = db.Examenes.Where(x => x.Nombre_exa.Contains(valor)).ToList();
+                return View(result);
+            }
 
         }
 
@@ -137,6 +165,7 @@ namespace ClinicaWeb.Controllers
         // GET: Examen/Create
         public ActionResult Create()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Tipo");
             return View();
         }
@@ -162,6 +191,7 @@ namespace ClinicaWeb.Controllers
         // GET: Examen/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -195,6 +225,7 @@ namespace ClinicaWeb.Controllers
         // GET: Examen/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -296,13 +327,30 @@ namespace ClinicaWeb.Controllers
         }
         public ActionResult ListaExamenes()
         {
-            if (this.Session["ShoppingCart"] != null)
+            if(User.IsInRole("Paciente"))
             {
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                if (this.Session["ShoppingCart"] != null)
+                {
 
-                cart = (List<DetalleOrden>)Session["ShoppingCart"];
+                    cart = (List<DetalleOrden>)Session["ShoppingCart"];
+                }
+                ViewBag.cart = cart.Count();
+                return View(cart);
             }
-            ViewBag.cart = cart.Count();
-            return View(cart);
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                if (this.Session["ShoppingCart"] != null)
+                {
+
+                    cart = (List<DetalleOrden>)Session["ShoppingCart"];
+                }
+                ViewBag.cart = cart.Count();
+                return View(cart);
+            }
+          
+         
         }
 
         struct cat

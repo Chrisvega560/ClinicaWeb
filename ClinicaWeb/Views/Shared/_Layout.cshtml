@@ -55,32 +55,11 @@
     @Scripts.Render("~/Admin/assets/bundles/chart-js/Chart.min.js")
     @Scripts.Render("~/Admin/assets/bundles/chart-js/utils.js")
     @Scripts.Render("~/Admin/assets/bundles/apexcharts/apexcharts.min.js")
-    @Scripts.Render("~/Admin/assets/data/apex-home.js")
     @RenderSection("scripts", required: false)
 
 </head>
 <body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white white-sidebar-color logo-indigo">
 
-    <div>
-        @*<div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>*@
-    </div>
     @Html.Partial("_Navbar")
 <div class="page-container">
     @Html.Partial("_Sidebar")

@@ -83,21 +83,6 @@ namespace ClinicaWeb.Controllers
 
                 Dashboard d = new Dashboard();
 
-                //d.mes = (List<Ventas>)db.Facturas.ToList().Where(x => DateTime.Parse(x.FechaFac) > DateTime.Today.AddDays(-30)).Select(x=> new Ventas()
-                //{
-                //    Monto = x.DetalleFactura.Sum(y=> y.Cantidad * y.PrecioUnitario),
-                //     Cant = x.DetalleFactura.Count(),
-                //}).ToList();
-
-                //d.Mes = db.Facturas.ToList().Where(x => DateTime.Parse(x.FechaFac) > DateTime.Today.AddDays(-30)).GroupBy(x => x.DetalleFactura.FirstOrDefault().Orden.DetalleOrden.FirstOrDefault().ExamenId).Select(x => new ProductoMes()
-                //{
-                //    Id = x.FirstOrDefault().Id,
-                //    Cant = x.FirstOrDefault().DetalleFactura.Count(),
-                //    exa = x.FirstOrDefault().DetalleFactura.FirstOrDefault().Orden.DetalleOrden.FirstOrDefault().Examen,
-                //    Total = x.FirstOrDefault().DetalleFactura.Sum(y => y.Cantidad * y.PrecioUnitario),
-
-                //}).Take(10).ToList();
-
                 d.Mes = db.DetallesFacturas.ToList().Where(x => DateTime.Parse(x.Factura.FechaFac) > DateTime.Today.AddDays(-30)).GroupBy(x => x.Orden.DetalleOrden.FirstOrDefault().ExamenId).Select(x => new ProductoMes()
                 {
                     Id = x.FirstOrDefault().Id,
@@ -121,7 +106,7 @@ namespace ClinicaWeb.Controllers
                     Totalitem = (int)x.Sum(y => y.DetalleFactura.Sum(z=> z.Cantidad))
                 }).ToList();
 
-
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
 
                 return View(d);
             }

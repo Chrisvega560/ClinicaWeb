@@ -21,7 +21,8 @@ namespace ClinicaWeb.Controllers
         // GET: Facturas
         public ActionResult Index()
         {
-            return View(db.Facturas.ToList());
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+            return View(db.Facturas.OrderByDescending(x=> x.FechaFac).ToList());
         }
 
         public ActionResult DescargarFact(int id)
@@ -63,6 +64,7 @@ namespace ClinicaWeb.Controllers
         // GET: Facturas/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -1,42 +1,67 @@
 ﻿@model ClinicaWeb.Models.Empleado
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Información Personal";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.R9 = "active";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>Empleado</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom_Empleado)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nom_Empleado)
-        </dd>
+    <h4>Mi perfil de Usuario</h4>
+    <br />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User)
-        </dd>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="@Url.Content("~/Adminlte/dist/img/Santafe.png")"
+                             alt="User profile picture">
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Cargo.Descripcion)
-        </dt>
+                    <h3 class="profile-username text-center">  @Html.DisplayFor(model => model.Nom_Empleado)</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.Cargo.Descripcion)
-        </dd>
+                    <p class="text-muted text-center">     @Html.DisplayFor(model => model.User)</p>
 
-    </dl>
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <b>Cambiar Contraseña</b> <a href="@Url.Action("ChangePasword","Manage")" class="float-right">Ir a -></a>
+                        </li>
+                    </ul>
+
+                    <a href="@Url.Action("Edit","Empleadoes", new { id = Model.Id })" class="btn btn-primary btn-block"><b>Editar Perfil</b></a>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-text-width"></i>
+                        Información personal
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Nombre del Paciente</dt>
+                        <dd class="col-sm-8">  @Html.DisplayFor(model => model.Nom_Empleado)</dd>
+                        <dt class="col-sm-4">Cargo Desempeñado</dt>
+                        <dd class="col-sm-8">  @Html.DisplayFor(model => model.Cargo.Descripcion)</dd>
+                    </dl>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

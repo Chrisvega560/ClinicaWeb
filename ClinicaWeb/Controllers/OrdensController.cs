@@ -34,6 +34,7 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens
         public ActionResult Index()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             var ordenes = db.Ordenes.Include(o => o.Medico).Include(o => o.Paciente).Include(o => o.Empleado).Where(x=> x.Estado== "Aprobado");
             return View(ordenes.ToList());
         }
@@ -41,21 +42,22 @@ namespace ClinicaWeb.Controllers
         [Authorize(Roles = "Admin,Recepcionista,Laboratorista")]
         public ActionResult OrdenesFinalizadas()
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             var ordenes = db.Ordenes.Where(x => x.Estado == "Finalizado");
             return View(ordenes.ToList());
         }
         [Authorize(Roles = "Paciente")]
         public ActionResult OrdenesPacientes()
         {
-
+            ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
             var ordenes = db.Ordenes.Where(x => x.Paciente.Correo == User.Identity.Name.ToString());
-            ViewBag.cant = (from o in db.Ordenes where o.Paciente.Correo == User.Identity.Name.ToString() select o).Count();
+            ViewBag.cant = (from o in db.Ordenes where o.Paciente.Correo == User.Identity. Name.ToString() select o).Count();
             return View(ordenes.ToList());
         }
 
         public ActionResult Solicitudes()
         {
-
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             var Do = db.Ordenes.Where(x => x.Estado == "Solicitud");
             ViewBag.cant = Do.ToList().Count();
             return View(Do.ToList());
@@ -64,6 +66,7 @@ namespace ClinicaWeb.Controllers
         //Busqueda Implacable
         public ActionResult ListOrder(string valor)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             List<Orden> result = new List<Orden>();
             if (User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
             {
@@ -80,6 +83,7 @@ namespace ClinicaWeb.Controllers
             }
             else if (User.IsInRole("Paciente"))
             {
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
                 //Busqueda Implacable por codigo
                 valor = valor.Trim();
                 ViewBag.titulo = " | Resultados para " + valor;
@@ -113,7 +117,7 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens/Create
         public ActionResult Create()
         {
-
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
             ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
             ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed");
@@ -129,8 +133,9 @@ namespace ClinicaWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Cod_Orden,Fecha,Lugar,MedicoId,PacienteId,EmpleadoId")] Orden orden)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
 
-            if(User.IsInRole("Paciente"))
+            if (User.IsInRole("Paciente"))
             {
                 orden.EmpleadoId = (from Empleado in db.Empleados where Empleado.User == "Movil@gmail.com" select Empleado.Id).FirstOrDefault();
                 orden.PacienteId = (from paciente in db.Pacientes where paciente.Correo == User.Identity.Name.ToString() select paciente.Id).FirstOrDefault();
@@ -225,6 +230,7 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -247,6 +253,7 @@ namespace ClinicaWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Cod_Orden,Fecha,Lugar,MedicoId,PacienteId,EmpleadoId")] Orden orden)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (ModelState.IsValid)
             {
                 db.Entry(orden).State = EntityState.Modified;

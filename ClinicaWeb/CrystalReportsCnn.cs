@@ -15,6 +15,7 @@ namespace ClinicaWeb
             //connInfo.DatabaseName = SConn.InitialCatalog;
             //connInfo.UserID = SConn.UserID;
             //connInfo.Password = SConn.Password;
+            //return connInfo;
 
             CrystalDecisions.Shared.ConnectionInfo connInfo = new CrystalDecisions.Shared.ConnectionInfo();
             connInfo.ServerName = @"DESKTOP-80M8VBF";

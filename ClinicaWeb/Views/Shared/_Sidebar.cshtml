@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li class="nav-item  @ViewBag.P4">
-                    <a href="@Url.Action("Index","Manage")" class="nav-link nav-toggle">
+                    <a href="@Url.Action("Details","Pacientes", new {id =  ViewBag.Id})" class="nav-link nav-toggle">
                         <i data-feather="user-check"></i>
                         <span class="title">Perfil de Usuario</span>
                     </a>

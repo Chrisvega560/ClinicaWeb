@@ -15,7 +15,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClinicaWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class EmpleadoesController : Controller
     {
         private SantaFeModelContainer db = new SantaFeModelContainer();
@@ -63,8 +62,10 @@ namespace ClinicaWeb.Controllers
         }
 
         // GET: Empleadoes/Details/5
+        [Authorize(Roles = "Recepcionista, Laboratorista")]
         public ActionResult Details(int? id)
         {
+            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -159,7 +160,7 @@ namespace ClinicaWeb.Controllers
             {
                 db.Entry(empleado).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index"); 
             }
             ViewBag.CargoId = new SelectList(db.CargoSet, "Id", "Descripcion", empleado.CargoId);
             return View(empleado);
@@ -188,7 +189,15 @@ namespace ClinicaWeb.Controllers
             Empleado empleado = db.Empleados.Find(id);
             db.Empleados.Remove(empleado);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (User.IsInRole("Admin"))
+            {
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Details");
+            }
         }
 
         protected override void Dispose(bool disposing)

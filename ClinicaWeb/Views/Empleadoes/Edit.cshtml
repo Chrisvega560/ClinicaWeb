@@ -46,7 +46,11 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Guardar Cambios" class="btn btn-success" />
-            <a href="@Url.Action("Index","empleadoes")" class="btn btn-danger">Cancelar</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Index","empleadoes")" class="btn btn-danger">Cancelar</a>
+
+            }
         </div>
     </div>
 </div>
