@@ -1,0 +1,82 @@
+﻿@model ClinicaWeb.Models.Empleado
+
+@{
+    ViewBag.Title = "Editar Empleado";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.R9 = "active";
+}
+<h3>Editar Informacion del empleado</h3>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="control-label"> Nombre del empleado</label>
+                @Html.EditorFor(model => model.Nom_Empleado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nom_Empleado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="control-label"> Correo electroncio del empleado</label>
+                @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class="control-label">Cargo del empleado</label>
+                    @Html.DropDownList("CargoId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CargoId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class="control-label" hidden>Cargo del empleado</label>
+                    @Html.DropDownList("CargoId", null, htmlAttributes: new { @class = "form-control", @hidden = "hidden" })
+                    @Html.ValidationMessageFor(model => model.CargoId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <input type="submit" value="Guardar Cambios" class="btn btn-success" />
+                    <a href="@Url.Action("Index","empleadoes")" class="btn btn-danger">Cancelar</a>
+
+                }
+                else
+                {
+                    <input type="submit" value="Guardar Cambios" class="btn btn-success" />
+                    <a href="@Url.Action("Details","empleadoes", new {id = Model.Id })" class="btn btn-danger">Cancelar</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

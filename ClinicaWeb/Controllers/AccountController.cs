@@ -188,7 +188,7 @@ namespace ClinicaWeb.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
                     await this.UserManager.AddToRoleAsync(user.Id, "Paciente");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("OrdenesPacientes", "Ordens");
                 }
                 AddErrors(result);
             }

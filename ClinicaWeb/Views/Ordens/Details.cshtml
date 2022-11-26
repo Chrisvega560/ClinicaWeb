@@ -161,7 +161,7 @@
                         @Html.DisplayFor(modelItem => item.Orden.Empleado.Nom_Empleado)
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-block btn-success" onclick="download(@item.Id, @item.Examen.Categoria.Id)" type="submit">Imprimir Resultado</button>
+                        <button class="btn btn-block btn-success" onclick="download(@item.Id,@item.Examen.Categoria.Id)" type="submit">Imprimir Resultado</button>
                     </td>
                 </tr>
             }
@@ -198,6 +198,6 @@
 
 <script type="text/javascript">
     function download(id, categoria) {
-        window.open("/Resultadoes/DescargarResult/" + id + "?categoria=" + categoria);
+        window.open("/Resultadoes/Resultado/" + id + "?cat=" + categoria);
     }
 </script>

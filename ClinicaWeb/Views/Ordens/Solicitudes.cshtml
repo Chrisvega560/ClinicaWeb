@@ -11,10 +11,6 @@
         ViewBag.A1AAA = "active";
 
     }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
 }
 
 @if (ViewBag.cant == 0)
@@ -33,50 +29,50 @@
 }
 else
 {
-
-    foreach (var item in Model)
+<div class="row">
+    @foreach (var item in Model)
     {
 
-        <div class="col-md-4">
-            <!-- Widget: user widget style 2 -->
-            <div class="card card-widget widget-user-2 shadow-sm">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header" style="background-color:skyblue">
-                    <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="@Url.Content("~/adminlte/dist/img/SantaFe.png")" alt="User Avatar">
-                    </div>
-                    <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)</h3>
-                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.Paciente.Correo)</h5>
+    <div class="col-md-4">
+        <!-- Widget: user widget style 2 -->
+        <div class="card card-widget widget-user-2 shadow-sm">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header" style="background-color:skyblue">
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="@Url.Content("~/adminlte/dist/img/SantaFe.png")" alt="User Avatar">
                 </div>
-                <div class="card-footer p-0">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                Codigo De Orden<span class="float-right badge bg-primary">@Html.DisplayFor(modelItem => item.Cod_Orden)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                Fecha De Orden <span class="float-right badge bg-info">@Html.DisplayFor(modelItem => item.Fecha)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                Lugar de examen <span class="float-right badge bg-success">@Html.DisplayFor(modelItem => item.Lugar)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Edit", "Ordens", new { id = item.Id })" class="nav-link btn btn-block btn-primary">
-                                Ver Orden
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)</h3>
+                <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.Paciente.Correo)</h5>
             </div>
-            <!-- /.widget-user -->
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Codigo De Orden<span class="float-right badge bg-primary">@Html.DisplayFor(modelItem => item.Cod_Orden)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Fecha De Orden <span class="float-right badge bg-info">@Html.DisplayFor(modelItem => item.Fecha)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Lugar de examen <span class="float-right badge bg-success">@Html.DisplayFor(modelItem => item.Lugar)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="@Url.Action("Edit", "Ordens", new { id = item.Id })" class="nav-link btn btn-block btn-primary">
+                            Ver Orden
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
+        <!-- /.widget-user -->
+    </div>
 
     }
+</div>
 }

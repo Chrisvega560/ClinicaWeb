@@ -8,30 +8,35 @@
     ViewBag.A09 = "menu-open";
 }
 
-<h2>Index</h2>
-
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+</div>
+<br />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-success" href="@Url.Action("Create","Departamentoes")"><i class="fa fa-plus"></i> Agregar Nuevo Departamento</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre_dpto)
+           Nombre del departamento
         </th>
-        <th></th>
+        <th> Opciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre_dpto)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_dpto)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","Departamentoes",new { id = item.Id })" class="btn btn-info" title="Editar Departamento"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","Departamentoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar Departamento"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

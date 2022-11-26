@@ -4,7 +4,7 @@
     ViewBag.Title = "Lista de Categorias";
     ViewBag.M2 = "active";
 
-    if(User.IsInRole("Admin"))
+    if (User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
         ViewBag.A5 = "active";
@@ -12,30 +12,35 @@
     }
 }
 
-<h2>Index</h2>
-
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+</div>
+<br />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-success" href="@Url.Action("Create","Categorias")"><i class="fa fa-plus"></i> Agregar Nueva categoria</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Tipo)
+           Categorias
         </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tipo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","categorias",new { id = item.Id })" class="btn btn-info" title="Editar Categoria"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","categorias",new { id = item.Id })" class="btn btn-danger" title="Eliminar Categoria"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

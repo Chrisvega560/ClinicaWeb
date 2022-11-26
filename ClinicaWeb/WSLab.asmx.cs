@@ -98,12 +98,12 @@ namespace ClinicaWeb
             item.PacienteId = PacientebyId(correo);
             item.MedicoId = 1;
             item.EmpleadoId = 2;
-            item.Estado = "En Proceso";
+            item.Estado = "Solicitud";
             item.DetalleOrden = Cart_Mobile.Select(x => new DetalleOrden()
             {
                 OrdenId = x.Id,
                 Cantidad = "1",
-                Estado = "En Proceso",
+                Estado = "Pendiente",
                 FechaFinal = DateTime.Today.ToString(),
                 Precio = x.Precio,
                 ExamenId = x.ExamenId
@@ -176,7 +176,7 @@ namespace ClinicaWeb
         public List<OrdenWS> ListaOrden(string correo)
         {
             int idpac = PacientebyId(correo);
-            return db.Ordenes.Where(x => x.PacienteId == idpac).Select(x => new OrdenWS()
+            return db.Ordenes.Where(x => x.PacienteId == idpac).OrderByDescending(x=> x.Fecha).Select(x => new OrdenWS()
             {
                 Id = x.Id,
                 EmpleadoId = x.EmpleadoId,

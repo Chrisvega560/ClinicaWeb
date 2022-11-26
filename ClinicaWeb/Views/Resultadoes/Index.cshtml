@@ -12,20 +12,22 @@
     }
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+</div>
+<br />
+<table  class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripción
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DetalleOrden.Cantidad)
+           Cantidad
         </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
     @foreach (var item in Model)
@@ -38,9 +40,8 @@
                 @Html.DisplayFor(modelItem => item.DetalleOrden.Cantidad)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <a href="@Url.Action("Edit","Resultadoes",new { id = item.Id })" class="btn btn-info" title="Editar"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","Resultadoes",new { id = item.Id })" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
     }

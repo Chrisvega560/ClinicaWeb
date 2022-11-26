@@ -80,22 +80,44 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (User.IsInRole("Paciente"))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Categoria.Tipo)
-                        </td>
-                        <td>  @Html.DisplayFor(modelItem => item.Nombre_exa)</td>
-                        <td>
-                            C$ @Html.DisplayFor(modelItem => item.Precio)
-                        </td>
-                        <td>
-                            <button type='button' id="@item.Id.ToString()" class='btn btn-primary' title="Añadir a la Lista" onclick="add(@item.Id.ToString())"><i class="fa fa-cart-plus"></i></button> |
-                            <a href="@Url.Action("Edit","examen",new { id = item.Id })" class="btn btn-info" title="Editar Examen"><i class="fa fa-edit"></i></a> |
-                            <a href="@Url.Action("Delete","examen",new { id = item.Id })" class="btn btn-danger" title="Eliminar Examen"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria.Tipo)
+                            </td>
+                            <td>  @Html.DisplayFor(modelItem => item.Nombre_exa)</td>
+                            <td>
+                                C$ @Html.DisplayFor(modelItem => item.Precio)
+                            </td>
+                            <td>
+                                <button type='button' id="@item.Id.ToString()" class='btn btn-primary' title="Añadir a la Lista" onclick="add(@item.Id.ToString())"><i class="fa fa-cart-plus"></i></button> 
+                               
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria.Tipo)
+                            </td>
+                            <td>  @Html.DisplayFor(modelItem => item.Nombre_exa)</td>
+                            <td>
+                                C$ @Html.DisplayFor(modelItem => item.Precio)
+                            </td>
+                            <td>
+                                <button type='button' id="@item.Id.ToString()" class='btn btn-primary' title="Añadir a la Lista" onclick="add(@item.Id.ToString())"><i class="fa fa-cart-plus"></i></button> |
+                                <a href="@Url.Action("Edit","examen",new { id = item.Id })" class="btn btn-info" title="Editar Examen"><i class="fa fa-edit"></i></a> |
+                                <a href="@Url.Action("Delete","examen",new { id = item.Id })" class="btn btn-danger" title="Eliminar Examen"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
                 }
 
             </tbody>

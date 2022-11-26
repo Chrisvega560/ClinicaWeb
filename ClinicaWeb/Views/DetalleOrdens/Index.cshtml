@@ -8,60 +8,64 @@
     ViewBag.A1AAAA = "active";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Cantidad)
+           Cantidad
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FechaFinal)
+           Fecha Final
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Precio)
+           Precio
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Estado)
+            Estado
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Orden.Cod_Orden)
+            Codigo de Orden
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Examen.Nombre_exa)
+           Nombre del Examen
         </th>
-        <th></th>
+        <th>
+            Opciones
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaFinal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Orden.Cod_Orden)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orden.Cod_Orden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Examen.Nombre_exa)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","DetalleOrdens",new { id = item.Id })" class="btn btn-info" title="Editar"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","DetalleOrdens",new { id = item.Id })" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

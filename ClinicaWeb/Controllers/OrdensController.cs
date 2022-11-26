@@ -34,43 +34,73 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens
         public ActionResult Index()
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
-            var ordenes = db.Ordenes.Include(o => o.Medico).Include(o => o.Paciente).Include(o => o.Empleado).Where(x=> x.Estado== "Aprobado");
-            return View(ordenes.ToList());
+            if(User.IsInRole("Admin"))
+            {
+                var ordenes = db.Ordenes.Include(o => o.Medico).Include(o => o.Paciente).Include(o => o.Empleado).Where(x => x.Estado == "Aprobado").OrderByDescending(x=> x.Fecha);
+                return View(ordenes.ToList());
+            }
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                var ordenes = db.Ordenes.Include(o => o.Medico).Include(o => o.Paciente).Include(o => o.Empleado).Where(x => x.Estado == "Aprobado").OrderByDescending(x => x.Fecha);
+                return View(ordenes.ToList());
+            }
+           
         }
 
         [Authorize(Roles = "Admin,Recepcionista,Laboratorista")]
         public ActionResult OrdenesFinalizadas()
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
-            var ordenes = db.Ordenes.Where(x => x.Estado == "Finalizado");
-            return View(ordenes.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                var ordenes = db.Ordenes.Where(x => x.Estado == "Finalizado").OrderByDescending(x => x.Fecha);
+                return View(ordenes.ToList());
+            }
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                var ordenes = db.Ordenes.Where(x => x.Estado == "Finalizado").OrderByDescending(x => x.Fecha);
+                return View(ordenes.ToList());
+            }
+           
         }
         [Authorize(Roles = "Paciente")]
         public ActionResult OrdenesPacientes()
         {
+
             ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
             var ordenes = db.Ordenes.Where(x => x.Paciente.Correo == User.Identity.Name.ToString());
             ViewBag.cant = (from o in db.Ordenes where o.Paciente.Correo == User.Identity. Name.ToString() select o).Count();
             return View(ordenes.ToList());
         }
-
+        [Authorize(Roles = "Admin,Recepcionista")]
         public ActionResult Solicitudes()
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
-            var Do = db.Ordenes.Where(x => x.Estado == "Solicitud");
-            ViewBag.cant = Do.ToList().Count();
-            return View(Do.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                var Do = db.Ordenes.Where(x => x.Estado == "Solicitud").OrderByDescending(x => x.Fecha);
+                ViewBag.cant = Do.ToList().Count();
+                return View(Do.ToList());
+            }
+            else
+            {
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                var Do = db.Ordenes.Where(x => x.Estado == "Solicitud").OrderByDescending(x => x.Fecha);
+                ViewBag.cant = Do.ToList().Count();
+                return View(Do.ToList());
+            }
+
+           
         }
 
         //Busqueda Implacable
         public ActionResult ListOrder(string valor)
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+            
             List<Orden> result = new List<Orden>();
             if (User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
             {
-                
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
                 valor = valor.Trim();
                 ViewBag.titulo = " | Resultados para " + valor;
                 if (Regex.IsMatch(valor, Upattern))
@@ -102,28 +132,93 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (User.IsInRole("Paciente"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Orden orden = db.Ordenes.Find(id);
+                if (orden == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(orden);
             }
-            Orden orden = db.Ordenes.Find(id);
-            if (orden == null)
+            else
             {
-                return HttpNotFound();
+                if(User.IsInRole("Admin"))
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Orden orden = db.Ordenes.Find(id);
+                    if (orden == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(orden);
+                }
+                else
+                {
+                    ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Orden orden = db.Ordenes.Find(id);
+                    if (orden == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(orden);
+                }
+
+                
             }
-            return View(orden);
+            
         }
 
         // GET: Ordens/Create
         public ActionResult Create()
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
-            ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
-            ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
-            ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed");
-            ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac");
-            ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado");
-            return View();
+            if(User.IsInRole("Admin"))
+            {
+
+                ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
+                ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
+                ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed");
+                ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac");
+                ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado");
+                return View();
+            }
+            else
+            {
+                if(User.IsInRole("Paciente"))
+                {
+                    ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                    ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
+                    ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
+                    ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed");
+                    ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac");
+                    ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado");
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                    ViewBag.MunicipioId = new SelectList(db.Municipios, "Id", "Nombre_mun");
+                    ViewBag.SexoId = new SelectList(db.Sexos, "Id", "TipoSexo");
+                    ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed");
+                    ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac");
+                    ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado");
+                    return View();
+                }
+               
+            }
+           
         }
 
         // POST: Ordens/Create
@@ -133,10 +228,11 @@ namespace ClinicaWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Cod_Orden,Fecha,Lugar,MedicoId,PacienteId,EmpleadoId")] Orden orden)
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+
 
             if (User.IsInRole("Paciente"))
             {
+                ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
                 orden.EmpleadoId = (from Empleado in db.Empleados where Empleado.User == "Movil@gmail.com" select Empleado.Id).FirstOrDefault();
                 orden.PacienteId = (from paciente in db.Pacientes where paciente.Correo == User.Identity.Name.ToString() select paciente.Id).FirstOrDefault();
                 orden.Estado = "Solicitud";
@@ -154,7 +250,7 @@ namespace ClinicaWeb.Controllers
 
                 Factura fact = new Factura();
                 fact.CodFactura = cod();
-                fact.FechaFac = DateTime.Today.ToString();
+                fact.FechaFac = DateTime.Today.ToString("MM/dd/yyyy");
                 fact.DetalleFactura = cart.Select(y => new DetalleFactura()
                 {
                     Cantidad = double.Parse(y.Cantidad),
@@ -179,42 +275,86 @@ namespace ClinicaWeb.Controllers
             }
             else
             {
-                orden.EmpleadoId = (from Empleado in db.Empleados where Empleado.User == User.Identity.Name.ToString() select Empleado.Id).FirstOrDefault();
-                orden.Estado = "Aprobado";
-
-                List<DetalleOrden> cart = (List<DetalleOrden>)Session["ShoppingCart"];
-                orden.DetalleOrden = cart.Select(x => new DetalleOrden()
+                if(User.IsInRole("Admin"))
                 {
-                    OrdenId = x.OrdenId,
-                    Cantidad = x.Cantidad,
-                    FechaFinal = DateTime.Today.ToString(),
-                    Precio = x.Examen.Precio,
-                    Estado = "Pendiente",
-                    ExamenId = x.ExamenId,
-                }).ToList();
+                    orden.EmpleadoId = (from Empleado in db.Empleados where Empleado.User == User.Identity.Name.ToString() select Empleado.Id).FirstOrDefault();
+                    orden.Estado = "Aprobado";
 
-                Factura fact = new Factura();
-                fact.CodFactura = cod();
-                fact.FechaFac = DateTime.Today.ToString();
-                fact.DetalleFactura = cart.Select(y => new DetalleFactura()
-                {
-                    Cantidad = double.Parse(y.Cantidad),
-                    Descripcion = y.Examen.Nombre_exa,
-                    OrdenId = orden.Id,
-                    PrecioUnitario = y.Examen.Precio,
-                    FacturaId = fact.Id,
-                    Subtotal = (y.Examen.Precio * double.Parse(y.Cantidad)),
-                }).ToList();
-                
-                if (ModelState.IsValid)
-                {
-                    db.Ordenes.Add(orden);
-                    db.Facturas.Add(fact);
-                    db.SaveChanges();
-                    Session.Clear();
-                    return RedirectToAction("Details", "Facturas", new { id = db.Facturas.ToList().Last().Id });
+                    List<DetalleOrden> cart = (List<DetalleOrden>)Session["ShoppingCart"];
+                    orden.DetalleOrden = cart.Select(x => new DetalleOrden()
+                    {
+                        OrdenId = x.OrdenId,
+                        Cantidad = x.Cantidad,
+                        FechaFinal = DateTime.Today.ToString(),
+                        Precio = x.Examen.Precio,
+                        Estado = "Pendiente",
+                        ExamenId = x.ExamenId,
+                    }).ToList();
 
+                    Factura fact = new Factura();
+                    fact.CodFactura = cod();
+                    fact.FechaFac = DateTime.Today.ToString("MM/dd/yyyy");
+                    fact.DetalleFactura = cart.Select(y => new DetalleFactura()
+                    {
+                        Cantidad = double.Parse(y.Cantidad),
+                        Descripcion = y.Examen.Nombre_exa,
+                        OrdenId = orden.Id,
+                        PrecioUnitario = y.Examen.Precio,
+                        FacturaId = fact.Id,
+                        Subtotal = (y.Examen.Precio * double.Parse(y.Cantidad)),
+                    }).ToList();
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Ordenes.Add(orden);
+                        db.Facturas.Add(fact);
+                        db.SaveChanges();
+                        Session.Clear();
+                        return RedirectToAction("Details", "Facturas", new { id = db.Facturas.ToList().Last().Id });
+
+                    }
                 }
+                else
+                {
+
+                    orden.EmpleadoId = (from Empleado in db.Empleados where Empleado.User == User.Identity.Name.ToString() select Empleado.Id).FirstOrDefault();
+                    orden.Estado = "Aprobado";
+
+                    List<DetalleOrden> cart = (List<DetalleOrden>)Session["ShoppingCart"];
+                    orden.DetalleOrden = cart.Select(x => new DetalleOrden()
+                    {
+                        OrdenId = x.OrdenId,
+                        Cantidad = x.Cantidad,
+                        FechaFinal = DateTime.Today.ToString(),
+                        Precio = x.Examen.Precio,
+                        Estado = "Pendiente",
+                        ExamenId = x.ExamenId,
+                    }).ToList();
+
+                    Factura fact = new Factura();
+                    fact.CodFactura = cod();
+                    fact.FechaFac = DateTime.Today.ToString("MM/dd/yyyy");
+                    fact.DetalleFactura = cart.Select(y => new DetalleFactura()
+                    {
+                        Cantidad = double.Parse(y.Cantidad),
+                        Descripcion = y.Examen.Nombre_exa,
+                        OrdenId = orden.Id,
+                        PrecioUnitario = y.Examen.Precio,
+                        FacturaId = fact.Id,
+                        Subtotal = (y.Examen.Precio * double.Parse(y.Cantidad)),
+                    }).ToList();
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Ordenes.Add(orden);
+                        db.Facturas.Add(fact);
+                        db.SaveChanges();
+                        Session.Clear();
+                        return RedirectToAction("Details", "Facturas", new { id = db.Facturas.ToList().Last().Id });
+
+                    }
+                }
+                
             }
 
            
@@ -230,20 +370,40 @@ namespace ClinicaWeb.Controllers
         // GET: Ordens/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
-            if (id == null)
+            if(User.IsInRole("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Orden orden = db.Ordenes.Find(id);
+                if (orden == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed", orden.MedicoId);
+                ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac", orden.PacienteId);
+                ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado", orden.EmpleadoId);
+                return View(orden);
             }
-            Orden orden = db.Ordenes.Find(id);
-            if (orden == null)
+            else
             {
-                return HttpNotFound();
+                ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Orden orden = db.Ordenes.Find(id);
+                if (orden == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed", orden.MedicoId);
+                ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac", orden.PacienteId);
+                ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado", orden.EmpleadoId);
+                return View(orden);
             }
-            ViewBag.MedicoId = new SelectList(db.Medicos, "Id", "NombreMed", orden.MedicoId);
-            ViewBag.PacienteId = new SelectList(db.Pacientes, "Id", "Nombre_pac", orden.PacienteId);
-            ViewBag.EmpleadoId = new SelectList(db.Empleados, "Id", "Nom_Empleado", orden.EmpleadoId);
-            return View(orden);
+            
         }
 
         // POST: Ordens/Edit/5
@@ -253,7 +413,6 @@ namespace ClinicaWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Cod_Orden,Fecha,Lugar,MedicoId,PacienteId,EmpleadoId")] Orden orden)
         {
-            ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
             if (ModelState.IsValid)
             {
                 db.Entry(orden).State = EntityState.Modified;

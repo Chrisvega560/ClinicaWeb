@@ -2,15 +2,29 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.A5 = "active";
 }
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-exclamation-triangle"></i>
+            Editar Información
+        </h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Alerta!</h5>
+            Estas apunto de modificar información crucial!
+        </div>
+        <h3>¿Seguro que quiere editar esta información?</h3>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         <h4>Categoria</h4>
         <hr />
@@ -27,14 +41,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar Cambios" class="btn btn-success" />
+                <a href="@Url.Action("Index","Categorias")" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
     </div>
-}
+        }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+    </div>
 </div>
 
 @section Scripts {

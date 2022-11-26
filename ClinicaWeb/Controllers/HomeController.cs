@@ -72,6 +72,42 @@ namespace ClinicaWeb.Controllers
             {
                 return RedirectToAction("OrdenesPacientes", "Ordens");
             }
+            else if(User.IsInRole("Admin"))
+            {
+                ViewBag.examen = db.Examenes.Count();
+                ViewBag.pacientes = db.Pacientes.Count();
+                ViewBag.ave = db.DetallesFacturas.Sum(x => x.Cantidad);
+                ViewBag.price = db.DetallesFacturas.Sum(x => x.PrecioUnitario);
+                ViewBag.facturas = db.Facturas.ToList();
+                ViewBag.Orders = db.Ordenes.Where(x => x.Estado == "Aprobado").Count();
+
+                Dashboard d = new Dashboard();
+
+                d.Mes = db.DetallesFacturas.ToList().Where(x => 1 == 1).GroupBy(x => x.Orden.DetalleOrden.FirstOrDefault().ExamenId).Select(x => new ProductoMes()
+                {
+                    Id = x.FirstOrDefault().Id,
+                    Cant = x.Count(),
+                    exa = x.FirstOrDefault().Orden.DetalleOrden.FirstOrDefault().Examen,
+                    Total = x.Sum(y => y.Cantidad * y.PrecioUnitario),
+
+                }).Take(10).ToList();
+
+
+                DateTime inicio = new DateTime(DateTime.Today.Year - 1, DateTime.Today.Month, 1);
+
+                if (d.Mes == null)
+                    d.Mes = new List<ProductoMes>();
+
+                d.Annio = db.Facturas.ToList().Where(x => DateTime.Parse(x.FechaFac) >= inicio && DateTime.Parse(x.FechaFac) <= DateTime.Today).GroupBy(x => DateTime.Parse(x.FechaFac).Month).Select(x => new Ventas()
+                {
+                    Monto = x.Sum(y => y.DetalleFactura.Sum(z => z.Cantidad * z.PrecioUnitario)),
+                    Cant = x.Count(),
+                    Dia = DateTime.Parse(x.FirstOrDefault().FechaFac),
+                    Totalitem = (int)x.Sum(y => y.DetalleFactura.Sum(z => z.Cantidad))
+                }).ToList();
+
+                return View(d);
+            }
             else
             {
                 ViewBag.examen = db.Examenes.Count();
@@ -83,7 +119,7 @@ namespace ClinicaWeb.Controllers
 
                 Dashboard d = new Dashboard();
 
-                d.Mes = db.DetallesFacturas.ToList().Where(x => DateTime.Parse(x.Factura.FechaFac) > DateTime.Today.AddDays(-30)).GroupBy(x => x.Orden.DetalleOrden.FirstOrDefault().ExamenId).Select(x => new ProductoMes()
+                d.Mes = db.DetallesFacturas.ToList().Where(x => 1 == 1).GroupBy(x => x.Orden.DetalleOrden.FirstOrDefault().ExamenId).Select(x => new ProductoMes()
                 {
                     Id = x.FirstOrDefault().Id,
                     Cant = x.Count(),

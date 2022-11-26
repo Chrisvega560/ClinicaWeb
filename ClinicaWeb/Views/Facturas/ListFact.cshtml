@@ -1,26 +1,15 @@
-﻿@model IEnumerable<ClinicaWeb.Models.Orden>
-
+﻿@model IEnumerable<ClinicaWeb.Models.Factura>
 @{
-    ViewBag.M1 = "active";
-    ViewBag.Title = "Listado de Ordenes";
-    if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
-    {
-        Layout = "~/Views/Shared/_LayoutSis.cshtml";
-        ViewBag.R1 = "active";
-
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-        ViewBag.P1 = "active";
-    }
+    ViewBag.Title = "Listado de Facturas";
+    Layout = "~/Views/Shared/_LayoutSis.cshtml";
+    ViewBag.R6 = "active";
 }
 
 <div class="card">
     <div class="card-header border-0">
-        <h3 class="card-title">Ordenes</h3>
+        <h3 class="card-title">Facturas</h3>
         <div class="card-tools">
-            <form action="@Url.Action("ListOrder","Ordens")" method="get" class="navbar-form navbar-right" role="search">
+            <form action="@Url.Action("ListFact","Facturas")" method="get" class="navbar-form navbar-right" role="search">
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" id="value" name="valor" class="form-control float-right" value="@ViewBag.valor" placeholder="Search">
 
@@ -42,8 +31,8 @@
         <table class="table table-striped table-valign-middle">
             <thead>
                 <tr>
-                    <th>Codigo de Orden</th>
-                    <th>Fecha de la Orden</th>
+                    <th>Codigo de Factura</th>
+                    <th>Fecha de la Factura</th>
                     <th>Paciente</th>
                     <th>Opciones</th>
                 </tr>
@@ -53,14 +42,14 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Cod_Orden)
+                            @Html.DisplayFor(modelItem => item.CodFactura)
                         </td>
-                        <td>  @Html.DisplayFor(modelItem => item.Fecha)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.FechaFac)</td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Paciente.Nombre_pac)
+                            @Html.DisplayFor(modelItem => item.DetalleFactura.FirstOrDefault().Orden.Paciente.Nombre_pac)
                         </td>
                         <td>
-                            <a id='btnadd' href="@Url.Action("Details","Ordens", new {id = item.Id })" class='btn btn-block btn-primary'>Ver detalle</a>
+                            <a id='btnadd' href="@Url.Action("Details","Facturas", new {id = item.Id })" class='btn btn-block btn-primary'>Ver detalle</a>
                         </td>
                     </tr>
                 }
@@ -69,3 +58,5 @@
         </table>
     </div>
 </div>
+
+

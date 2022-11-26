@@ -2,15 +2,14 @@
 
 @{
     ViewBag.Title = "Solicitudes de Ordenes";
-    ViewBag.M8 = "active";
     if (User.IsInRole("Admin") || User.IsInRole("Recepcionista") || User.IsInRole("Laboratorista"))
     {
+        ViewBag.R3 = "active";
         Layout = "~/Views/Shared/_LayoutSis.cshtml";
+        ViewBag.A01 = "menu-open";
+        ViewBag.A1 = "active";
+        ViewBag.A1AAA = "active";
 
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 
@@ -106,11 +105,6 @@
                                             <td>@item.Examen.Nombre_exa</td>
                                             <td>
                                                 @String.Format("{0:C}", @item.Precio)
-                                            </td>
-                                            <td class="text-right py-0 align-middle">
-                                                <div class="btn-group btn-group-sm">
-                                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                </div>
                                             </td>
                                         </tr>
                                     }

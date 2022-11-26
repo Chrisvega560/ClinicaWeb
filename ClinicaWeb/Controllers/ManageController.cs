@@ -15,6 +15,8 @@ namespace ClinicaWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private SantaFeModelContainer db = new SantaFeModelContainer();
+        ApplicationDbContext context = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -217,7 +219,24 @@ namespace ClinicaWeb.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            else
+            {
+                if (User.IsInRole("Paciente"))
+                {
+                    ViewBag.Id = db.Pacientes.Where(x => x.Correo == User.Identity.Name).FirstOrDefault().Id;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Ide = db.Empleados.Where(x => x.User == User.Identity.Name).FirstOrDefault().Id;
+                    return View();
+                }
+            }
+            
         }
 
         //

@@ -8,60 +8,62 @@
     Layout = "~/Views/Shared/_LayoutSis.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2>Listado</h2>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-hover table-head-fixed  table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Cantidad)
+         Cantidad
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripción
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrecioUnitario)
+           Precio Unitario
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subtotal)
+           Sub Total
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Orden.Cod_Orden)
+           Codigo de Orden
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Factura.FechaFac)
+           Fecha de Factura
         </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrecioUnitario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subtotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Orden.Cod_Orden)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Factura.FechaFac)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+               C$ @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+              C$  @Html.DisplayFor(modelItem => item.Subtotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orden.Cod_Orden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Factura.FechaFac)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","DetalleFacturas",new { id = item.Id })" class="btn btn-info" title="Editar"><i class="fa fa-edit"></i></a> |
+                <a href="@Url.Action("Delete","DetalleFacturas",new { id = item.Id })" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

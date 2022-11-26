@@ -8,8 +8,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ClinicaWeb.Models;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
+//using CrystalDecisions.CrystalReports.Engine;
+//using CrystalDecisions.Shared;
+using iText.IO.Font.Constants;
+using iText.IO.Image;
+using iText.Kernel.Events;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 
 namespace ClinicaWeb.Controllers
 {
@@ -24,58 +35,295 @@ namespace ClinicaWeb.Controllers
             var resultados = db.Resultados.Include(r => r.DetalleOrden);
             return View(resultados.ToList());
         }
-        public ActionResult DescargarResult(int id, int categoria)
+
+
+        public ActionResult pdf(int id)
         {
-            try
+            List<DetalleOrden> model = db.DetallesOrdenes.Where(x => x.Id == id).ToList();
+            MemoryStream ms = new MemoryStream();
+
+            PdfWriter pw = new PdfWriter(ms);
+
+            PdfDocument pd = new PdfDocument(pw);
+            Document doc = new Document(pd, PageSize.LETTER);
+            doc.SetMargins(75, 35, 70, 35);
+
+            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN);
+
+            Table table = new Table(1).UseAllAvailableWidth();
+            foreach (var item in model)
             {
-                var rptH = new ReportClass();
-                if (categoria == 7 || categoria == 3 || categoria == 4 || categoria == 8)
-                {
-                    rptH.FileName = Server.MapPath("/Reports/SecondReport.rpt");
-                }
-                else if (categoria == 5)
-                {
-                    rptH.FileName = Server.MapPath("/Reports/ResultReport.rpt");
-                }
-                else if (categoria == 6)
-                {
-                    rptH.FileName = Server.MapPath("/Reports/Hematologia.rpt");
-                }
-                else if (categoria == 1)
-                {
-                    rptH.FileName = Server.MapPath("/Reports/Uroanalisis.rpt");
-                }
-                rptH.Load();
+                Cell cell = new Cell().Add(new Paragraph("Nombre del Paciente: " + model.FirstOrDefault().Orden.Paciente.Nombre_pac).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+                cell = new Cell().Add(new Paragraph("Edad: " + model.FirstOrDefault().Orden.Paciente.Edad).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+                cell = new Cell().Add(new Paragraph("Codigo de Orden: " + model.FirstOrDefault().Orden.Cod_Orden).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+            }
+            doc.Add(table);
 
-                rptH.SetParameterValue("Id", id);
-                rptH.SetParameterValue("categoria", categoria);
+            Table t = new Table(1).UseAllAvailableWidth();
+            foreach (var item in model)
+            {
 
-                // Report connection
-                var connInfo = CrystalReportsCnn.GetConnectionInfo();
-                TableLogOnInfo logonInfo = new TableLogOnInfo();
-                Tables tables;
-                tables = rptH.Database.Tables;
-                foreach (Table table in tables)
-                {
-                    logonInfo = table.LogOnInfo;
-                    logonInfo.ConnectionInfo = connInfo;
-                    table.ApplyLogOnInfo(logonInfo);
-                }
-                Response.Buffer = false;
-                Response.ClearContent();
-                Response.ClearHeaders();
+                Cell c = new Cell().Add(new Paragraph(item.Examen.Nombre_exa).SetTextAlignment(TextAlignment.CENTER).SetFontSize(20F));
+                t.AddCell(c);
+                t.SetMarginBottom(50f);
+            }
 
-                Stream stream = rptH.ExportToStream(ExportFormatType.PortableDocFormat);
-                rptH.Dispose();
-                rptH.Close();
-                return new FileStreamResult(stream, "application/pdf");
+
+            doc.Add(t);
+            Table _table = new Table(2).UseAllAvailableWidth();
+            Cell _Cell = new Cell().Add(new Paragraph("Nombre del parametro")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER).SetBold();
+            _table.AddHeaderCell(_Cell);
+            _Cell = new Cell().Add(new Paragraph("Resultado")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER).SetBold();
+            _table.AddHeaderCell(_Cell);
+
+
+
+
+            foreach (var item in model.FirstOrDefault().Resultado.FirstOrDefault().DetalleResultado)
+            {
+                _Cell = new Cell().Add(new Paragraph(item.Parametro.Nom_Parametro)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph(item.Parametro.DetalleResultado.FirstOrDefault().ExamenResultado)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
 
             }
-            catch (Exception ex)
+
+            doc.Add(_table);
+
+            doc.Close();
+
+            byte[] bytesStream = ms.ToArray();
+            ms = new MemoryStream();
+            ms.Write(bytesStream, 0, bytesStream.Length);
+            ms.Position = 0;
+
+            return new FileStreamResult(ms, "application/pdf");
+
+        }
+
+        public ActionResult Resultado(int id, int cat)
+        {
+            List<DetalleOrden> model = db.DetallesOrdenes.Where(x => x.Id == id).ToList();
+            MemoryStream ms = new MemoryStream();
+
+            PdfWriter pw = new PdfWriter(ms);
+
+            PdfDocument pd = new PdfDocument(pw);
+            Document doc = new Document(pd, PageSize.LETTER);
+            doc.SetMargins(75, 35, 70, 35);
+
+            string pathlogo = Server.MapPath("~/Content/header.jpg");
+            Image img = new Image(ImageDataFactory.Create(pathlogo));
+            pd.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler1(img));
+            
+
+            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN);
+
+
+            
+
+
+            Table table = new Table(1).UseAllAvailableWidth();
+            foreach (var item in model)
             {
-                throw;
+                Cell cell = new Cell().Add(new Paragraph("Nombre del Paciente: " + model.FirstOrDefault().Orden.Paciente.Nombre_pac).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+                cell = new Cell().Add(new Paragraph("Edad: " + model.FirstOrDefault().Orden.Paciente.Edad).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+                cell = new Cell().Add(new Paragraph("Codigo de Orden: " + model.FirstOrDefault().Orden.Cod_Orden).SetFontSize(14)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                table.AddCell(cell);
+            }
+
+          
+            table.SetMarginBottom(10f);
+            table.SetMarginTop(20f);
+
+            doc.Add(table);
+
+
+            Table t = new Table(1).UseAllAvailableWidth();
+            foreach (var item in model)
+            {
+
+                Cell c = new Cell().Add(new Paragraph(item.Examen.Nombre_exa).SetTextAlignment(TextAlignment.CENTER).SetFontSize(20F));
+                t.AddCell(c);
+                t.SetMarginBottom(30f);
+            }
+
+
+            doc.Add(t);
+
+            if (cat == 7 || cat == 3 || cat == 4 || cat == 8)
+            {
+                Table _table = new Table(4).UseAllAvailableWidth();
+                Cell _Cell = new Cell().Add(new Paragraph("Nombre del parametro ")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Resultado")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Maximo")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Minimo")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+
+
+
+
+                foreach (var item in model.FirstOrDefault().Resultado.FirstOrDefault().DetalleResultado)
+                {
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Nom_Parametro)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.ExamenResultado)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Reactivo.Maximo)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Reactivo.Minimo))
+                        .SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                }
+
+                doc.Add(_table);
+            }
+            else if (cat == 5)
+            {
+                Table _table = new Table(2).UseAllAvailableWidth();
+                Cell _Cell = new Cell().Add(new Paragraph("Nombre del parametro")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Antibiograma")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+
+
+
+
+                foreach (var item in model.FirstOrDefault().Resultado.FirstOrDefault().DetalleResultado)
+                {
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Nom_Parametro)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.ExamenResultado)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                }
+
+                doc.Add(_table);
+            }
+            else if (cat == 6)
+            {
+                Table _table = new Table(5).UseAllAvailableWidth();
+                Cell _Cell = new Cell().Add(new Paragraph("Nombre del parametro ")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Resultado")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Maximo")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Minimo")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Dimensional")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                _table.AddCell(_Cell);
+
+
+
+
+                foreach (var item in model.FirstOrDefault().Resultado.FirstOrDefault().DetalleResultado)
+                {
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Nom_Parametro)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.DetalleResultado.FirstOrDefault().ExamenResultado)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Reactivo.Maximo)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Reactivo.Minimo))
+                        .SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Reactivo.Densidad))
+                        .SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                }
+
+                doc.Add(_table);
+            }
+            else if (cat == 1)
+            {
+                
+                Table _table = new Table(2).UseAllAvailableWidth();
+                Cell _Cell = new Cell().Add(new Paragraph("Nombre del parametro")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER).SetBold();
+                _table.AddHeaderCell(_Cell);
+                _Cell = new Cell().Add(new Paragraph("Resultado")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER).SetBold();
+                _table.AddHeaderCell(_Cell);
+
+
+
+
+                foreach (var item in model.FirstOrDefault().Resultado.FirstOrDefault().DetalleResultado)
+                {
+                    _Cell = new Cell().Add(new Paragraph(item.Parametro.Nom_Parametro)).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+                    _Cell = new Cell().Add(new Paragraph(item.ExamenResultado)).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER);
+                    _table.AddCell(_Cell);
+
+                }
+
+                doc.Add(_table);
+
+            }
+
+
+           
+
+            doc.Close();
+
+            byte[] bytesStream = ms.ToArray();
+            ms = new MemoryStream();
+            ms.Write(bytesStream, 0, bytesStream.Length);
+            ms.Position = 0;
+
+            return new FileStreamResult(ms, "application/pdf");
+
+        }
+
+        public class HeaderEventHandler1 : IEventHandler
+        {
+            Image Img;
+
+            public HeaderEventHandler1(Image img)
+            {
+                Img = img;
+            }
+            public void HandleEvent(Event @event)
+            {
+                PdfDocumentEvent DocEvent = (PdfDocumentEvent)@event;
+                PdfDocument doc = DocEvent.GetDocument();
+                PdfPage page = DocEvent.GetPage();
+
+                Rectangle RootArea = new Rectangle(10, page.GetPageSize().GetTop() - 55, page.GetPageSize().GetRight() - 70, 60);
+
+                Canvas canvas = new Canvas(page, RootArea);
+                canvas
+                    .Add(getTable(DocEvent))
+                    .ShowTextAligned("Dirección: Del parque central 2 cuadras al oeste y 2 cuadras al norte", 300, 50, TextAlignment.CENTER)
+                     .ShowTextAligned("Clínica familiar Masatepe, Nicaragua Teléfono: 82463210(Movistar)", 300, 30, TextAlignment.CENTER)
+                    .ShowTextAligned("Atenderle es un Privilegio", 300, 10, TextAlignment.CENTER)
+                    .Close();
+            }
+            public Table getTable(PdfDocumentEvent DocEvent)
+            {
+                float[] cellWidth = {20f, 80f };
+                Table TableEvent = new Table(UnitValue.CreatePercentArray(cellWidth)).UseAllAvailableWidth();
+
+                Style StyleCell = new Style().SetBorder(Border.NO_BORDER);
+
+                Style StyleText = new Style().SetTextAlignment(TextAlignment.LEFT).SetFontSize(10f);
+
+                Cell cell = new Cell().Add(Img.SetHeight(100).SetWidth(570));
+
+                TableEvent.AddCell(cell.AddStyle(StyleCell).SetTextAlignment(TextAlignment.JUSTIFIED));
+
+                return TableEvent;
+
             }
         }
+
+        
 
         // GET: Resultadoes/Details/5
         public ActionResult Details(int? id)
